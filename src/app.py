@@ -19,6 +19,11 @@ import uuid
 from datetime import datetime
 from werkzeug.utils import secure_filename
 
+# Import analysis modules
+from src.models.budget_analyzer import BudgetAnalyzer
+from src.services.risk_manager import RiskManager
+from src.services.recommendation_engine import RecommendationEngine
+
 # ============================================================================
 # INITIALIZATION
 # ============================================================================
@@ -49,43 +54,84 @@ def allowed_file(filename):
     """Check if file has allowed extension"""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+def _format_dept_data(dept_df):
+    """Convert department DataFrame to dict format for template"""
+    dept_dict = {}
+    for _, row in dept_df.iterrows():
+        dept_dict[row['Department']] = {
+            'total': row['total'],
+            'items': row['count'],
+            'percentage': row['percentage']
+        }
+    return dept_dict
+
+def _format_cat_data(cat_df):
+    """Convert category DataFrame to dict format for template"""
+    cat_dict = {}
+    for _, row in cat_df.iterrows():
+        cat_dict[row['Category']] = {
+            'total': row['total'],
+            'items': row['count'],
+            'percentage': row.get('percentage', 0)
+        }
+    return cat_dict
+
 def analyze_budget(df):
-    """Perform basic budget analysis"""
-    total = df['Amount'].sum()
-    items = len(df)
+    """
+    Perform comprehensive budget analysis with intelligent recommendations.
 
-    # High cost items (more than 10% of total)
-    high_cost_threshold = total * 0.1
-    high_cost_items = df[df['Amount'] > high_cost_threshold]
+    This enhanced version uses BudgetAnalyzer, RiskManager, and RecommendationEngine
+    to provide data-driven insights and actionable recommendations.
+    """
+    # Initialize analysis services
+    budget_analyzer = BudgetAnalyzer()
+    budget_analyzer.data = df
 
-    # Department breakdown
-    department_data = {}
-    if 'Department' in df.columns:
-        for dept, group in df.groupby('Department'):
-            department_data[dept] = {
-                'total': group['Amount'].sum(),
-                'items': len(group),
-                'percentage': (group['Amount'].sum() / total * 100) if total > 0 else 0
-            }
+    # Get comprehensive analysis
+    summary = budget_analyzer.get_summary()
+    dept_analysis = budget_analyzer.analyze_by_department()
+    cat_analysis = budget_analyzer.analyze_by_category()
 
-    # Category breakdown
-    category_data = {}
-    if 'Category' in df.columns:
-        for cat, group in df.groupby('Category'):
-            category_data[cat] = {
-                'total': group['Amount'].sum(),
-                'items': len(group),
-                'percentage': (group['Amount'].sum() / total * 100) if total > 0 else 0
-            }
+    # Add percentage to category analysis
+    cat_total = cat_analysis['total'].sum()
+    if cat_total > 0:
+        cat_analysis['percentage'] = (cat_analysis['total'] / cat_total * 100).round(2)
+    else:
+        cat_analysis['percentage'] = 0
+
+    # Risk analysis
+    risk_manager = RiskManager()
+    risk_analysis = risk_manager.analyze_risks(df)
+
+    # Generate intelligent recommendations
+    rec_engine = RecommendationEngine()
+    recommendations = rec_engine.generate_recommendations(
+        df=df,
+        dept_analysis=dept_analysis,
+        cat_analysis=cat_analysis,
+        risk_analysis=risk_analysis
+    )
 
     return {
-        'total_budget': total,
-        'total_items': items,
-        'high_cost_items': high_cost_items.to_dict('records'),
-        'high_cost_count': len(high_cost_items),
-        'departments': department_data,
-        'categories': category_data,
-        'average_item': total / items if items > 0 else 0
+        # Core metrics
+        'total_budget': summary['total_amount'],
+        'total_items': summary['total_items'],
+        'average_item': summary['average_amount'],
+
+        # Breakdowns (formatted for template)
+        'departments': _format_dept_data(dept_analysis),
+        'categories': _format_cat_data(cat_analysis),
+
+        # High-cost items
+        'high_cost_items': risk_analysis['items_by_category']['high_cost_items'],
+        'high_cost_count': len(risk_analysis['items_by_category']['high_cost_items']),
+
+        # NEW: Enhanced features
+        'recommendations': recommendations,
+        'insights': budget_analyzer.generate_insights(),
+        'health_score': rec_engine.calculate_health_score(df),
+        'concentration_index': rec_engine.calculate_hhi(dept_analysis),
+        'balance_score': rec_engine.calculate_gini(dept_analysis)
     }
 
 # ============================================================================

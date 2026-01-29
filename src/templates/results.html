@@ -114,36 +114,81 @@
     </div>
     {% endif %}
 
-    <!-- Recommendations -->
+    <!-- AI-Powered Recommendations -->
     <div class="card fade-in">
-        <h2 style="margin-bottom: 20px; color: #2d3436;">💡 Recommendations</h2>
-        <div style="display: grid; gap: 15px;">
-            <div style="padding: 15px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196f3;">
-                <strong>Review High-Cost Items</strong>
-                <p style="margin-top: 5px; color: #636e72;">
-                    {{ analysis.high_cost_count }} items cost more than 10% of your total budget.
-                    Consider breaking these down or negotiating better rates.
-                </p>
-            </div>
-
-            {% if analysis.departments %}
-            <div style="padding: 15px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #4caf50;">
-                <strong>Department Optimization</strong>
-                <p style="margin-top: 5px; color: #636e72;">
-                    Your budget spans {{ analysis.departments|length }} departments.
-                    Look for opportunities to consolidate spending in key areas.
-                </p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+            <h2 style="margin: 0; color: #2d3436;">💡 AI-Powered Recommendations</h2>
+            {% if analysis.health_score is defined %}
+            <div class="health-score-badge">
+                <div class="score-value">{{ analysis.health_score }}</div>
+                <div class="score-label">Health Score</div>
             </div>
             {% endif %}
-
-            <div style="padding: 15px; background: #fff3e0; border-radius: 8px; border-left: 4px solid #ff9800;">
-                <strong>Regular Review</strong>
-                <p style="margin-top: 5px; color: #636e72;">
-                    Schedule monthly budget reviews to track spending patterns
-                    and identify cost-saving opportunities early.
-                </p>
-            </div>
         </div>
+
+        {% if analysis.recommendations and analysis.recommendations|length > 0 %}
+            {% for rec in analysis.recommendations %}
+            <div class="recommendation-card priority-{{ rec.priority }}">
+                <div class="rec-header">
+                    <span class="priority-badge priority-{{ rec.priority }}">
+                        Priority {{ rec.priority }}
+                    </span>
+                    <span class="rec-type">{{ rec.type|upper }}</span>
+                </div>
+
+                <h3 style="margin: 10px 0; color: #2d3436; font-size: 18px;">{{ rec.title }}</h3>
+
+                <div class="rec-insight">
+                    <strong>📊 Insight:</strong> {{ rec.insight }}
+                </div>
+
+                <p class="rec-description">{{ rec.description }}</p>
+
+                <div class="rec-action">
+                    <strong>✓ Recommended Action:</strong> {{ rec.action }}
+                </div>
+
+                {% if rec.estimated_savings %}
+                <div class="savings-estimate">
+                    💰 Potential Savings: <strong>${{ "{:,.2f}".format(rec.estimated_savings) }}</strong>
+                </div>
+                {% endif %}
+
+                {% if rec.affected_items and rec.affected_items|length > 0 %}
+                <details class="affected-items">
+                    <summary>View {{ rec.affected_items|length }} Affected Item{{ 's' if rec.affected_items|length > 1 else '' }}</summary>
+                    <table class="mini-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Department</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in rec.affected_items[:5] %}
+                            <tr>
+                                <td>{{ item.Description }}</td>
+                                <td>{{ item.get('Department', 'N/A') }}</td>
+                                <td>${{ "{:,.2f}".format(item.Amount) }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if rec.affected_items|length > 5 %}
+                    <p style="margin-top: 10px; font-style: italic; color: #636e72;"><em>...and {{ rec.affected_items|length - 5 }} more item{{ 's' if (rec.affected_items|length - 5) > 1 else '' }}</em></p>
+                    {% endif %}
+                </details>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="padding: 30px; text-align: center; background: #f8f9fa; border-radius: 8px;">
+                <div style="font-size: 48px; margin-bottom: 15px;">✅</div>
+                <h3 style="color: #28a745; margin-bottom: 10px;">Excellent Budget Health!</h3>
+                <p style="color: #636e72;">No specific recommendations at this time. Your budget appears well-balanced and efficiently allocated.</p>
+            </div>
+        {% endif %}
     </div>
 
     <!-- Action Buttons -->
