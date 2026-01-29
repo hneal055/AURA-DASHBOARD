@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}Budget Analysis Results{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="header">
+        <h1>📊 Analysis Results</h1>
+        <p>{{ filename }} • Analyzed on {{ timestamp }}</p>
+    </div>
+
+    <!-- Key Statistics -->
+    <div class="stats-grid fade-in">
+        <div class="stat-card">
+            <span class="stat-icon">💰</span>
+            <div class="stat-value">{{ "${:,.2f}".format(analysis.total_budget) }}</div>
+            <div class="stat-label">Total Budget</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">📋</span>
+            <div class="stat-value">{{ analysis.total_items }}</div>
+            <div class="stat-label">Line Items</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">⚠️</span>
+            <div class="stat-value">{{ analysis.high_cost_count }}</div>
+            <div class="stat-label">High-Cost Items</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">📊</span>
+            <div class="stat-value">{{ "${:,.2f}".format(analysis.average_item) }}</div>
+            <div class="stat-label">Average Per Item</div>
+        </div>
+    </div>
+
+    <!-- Department Breakdown -->
+    {% if analysis.departments %}
+    <div class="card fade-in">
+        <h2 style="margin-bottom: 20px; color: #2d3436;">🏢 Department Breakdown</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Department</th>
+                    <th>Total Amount</th>
+                    <th>Percentage</th>
+                    <th>Items</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dept, stats in analysis.departments.items() %}
+                <tr>
+                    <td><strong>{{ dept }}</strong></td>
+                    <td>{{ "${:,.2f}".format(stats.total) }}</td>
+                    <td>{{ "{:.1f}%".format(stats.percentage) }}</td>
+                    <td>{{ stats['items'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    <!-- Category Breakdown -->
+    {% if analysis.categories %}
+    <div class="card fade-in">
+        <h2 style="margin-bottom: 20px; color: #2d3436;">📂 Category Breakdown</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Total Amount</th>
+                    <th>Percentage</th>
+                    <th>Items</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cat, stats in analysis.categories.items() %}
+                <tr>
+                    <td><strong>{{ cat }}</strong></td>
+                    <td>{{ "${:,.2f}".format(stats.total) }}</td>
+                    <td>{{ "{:.1f}%".format(stats.percentage) }}</td>
+                    <td>{{ stats['items'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    <!-- High Cost Items -->
+    {% if analysis.high_cost_items %}
+    <div class="card fade-in">
+        <h2 style="margin-bottom: 20px; color: #2d3436;">⚠️ High-Cost Items (Over 10% of Budget)</h2>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th>Department</th>
+                    <th>Category</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in analysis.high_cost_items %}
+                <tr>
+                    <td>{{ item.get('Description', 'N/A') }}</td>
+                    <td>{{ "${:,.2f}".format(item.get('Amount', 0)) }}</td>
+                    <td>{{ item.get('Department', 'N/A') }}</td>
+                    <td>{{ item.get('Category', 'N/A') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    <!-- Recommendations -->
+    <div class="card fade-in">
+        <h2 style="margin-bottom: 20px; color: #2d3436;">💡 Recommendations</h2>
+        <div style="display: grid; gap: 15px;">
+            <div style="padding: 15px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196f3;">
+                <strong>Review High-Cost Items</strong>
+                <p style="margin-top: 5px; color: #636e72;">
+                    {{ analysis.high_cost_count }} items cost more than 10% of your total budget.
+                    Consider breaking these down or negotiating better rates.
+                </p>
+            </div>
+
+            {% if analysis.departments %}
+            <div style="padding: 15px; background: #e8f5e9; border-radius: 8px; border-left: 4px solid #4caf50;">
+                <strong>Department Optimization</strong>
+                <p style="margin-top: 5px; color: #636e72;">
+                    Your budget spans {{ analysis.departments|length }} departments.
+                    Look for opportunities to consolidate spending in key areas.
+                </p>
+            </div>
+            {% endif %}
+
+            <div style="padding: 15px; background: #fff3e0; border-radius: 8px; border-left: 4px solid #ff9800;">
+                <strong>Regular Review</strong>
+                <p style="margin-top: 5px; color: #636e72;">
+                    Schedule monthly budget reviews to track spending patterns
+                    and identify cost-saving opportunities early.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap;">
+        <a href="/" class="btn">🏠 Analyze Another Budget</a>
+        <a href="/sample-csv" class="btn btn-secondary">📥 Download Sample CSV</a>
+    </div>
+</div>
+{% endblock %}

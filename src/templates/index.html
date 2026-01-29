@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Budget Analysis Pro - Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="header fade-in">
+        <h1>💰 Budget Analysis Pro</h1>
+        <p>Professional budget analysis with instant insights and actionable recommendations</p>
+    </div>
+
+    <div class="card fade-in">
+        <h2 style="margin-bottom: 10px; color: #2d3436;">📁 Upload Your Budget</h2>
+        <p style="color: #636e72; margin-bottom: 25px;">
+            Upload a CSV file with columns: <strong>Description, Amount</strong> (Department, Category optional)
+        </p>
+
+        <div class="upload-area">
+            <div class="upload-icon">📊</div>
+            <h3 style="margin-bottom: 10px; color: #2d3436;">Drag & Drop or Click to Browse</h3>
+            <p style="color: #636e72; margin-bottom: 25px;">Supports CSV files up to 16MB</p>
+
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".csv" required
+                       style="padding: 15px; border: 2px solid #667eea; border-radius: 8px;
+                              width: 100%; font-size: 1rem; margin-bottom: 20px;">
+                <button type="submit" class="btn" style="font-size: 1.1rem;">
+                    🚀 Analyze Budget Now
+                </button>
+            </form>
+        </div>
+
+        <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+            <h4 style="margin-bottom: 15px; color: #2d3436;">💡 Need a sample file?</h4>
+            <p style="color: #636e72; margin-bottom: 15px;">Download this sample CSV to get started:</p>
+            <a href="/sample-csv" class="btn btn-secondary" style="font-size: 0.95rem;">
+                📥 Download Sample CSV
+            </a>
+        </div>
+    </div>
+
+    <div class="stats-grid fade-in" style="margin-top: 40px;">
+        <div class="stat-card">
+            <span class="stat-icon">⚡</span>
+            <div class="stat-value">Instant</div>
+            <div class="stat-label">Real-time Analysis</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">🔍</span>
+            <div class="stat-value">Smart</div>
+            <div class="stat-label">Risk Detection</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">📈</span>
+            <div class="stat-value">Actionable</div>
+            <div class="stat-label">Insights & Tips</div>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">🛡️</span>
+            <div class="stat-value">Secure</div>
+            <div class="stat-label">Local Processing</div>
+        </div>
+    </div>
+</div>
+{% endblock %}
