@@ -1,0 +1,5 @@
+AURA_DASHBOARD/
+│── aura_dashboard.html      ← Frontend dashboard (upload + visualizations)
+│── script_parser.py         ← FastAPI backend with REAL relationship mapping
+│── requirements.txt         ← Python dependencies
+└── run_server.bat           ← One-click backend launcher

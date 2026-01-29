@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA Enhanced - Project Inventory & Structure Analysis</title>
+    <style>
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f8a5f;
+            --text-color: #e6e6e6;
+            --border-color: #2d4059;
+            --hover-color: #2a9d8f;
+            --python-color: #3776ab;
+            --js-color: #f7df1e;
+            --html-color: #e34f26;
+            --css-color: #1572b6;
+            --ps-color: #012456;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+        
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            list-style: none;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 25px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        
+        .tab:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .section {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+        
+        h2 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            margin: 20px 0 15px;
+            color: var(--hover-color);
+        }
+        
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .inventory-card {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .inventory-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        
+        .file-list {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .file-item {
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            border-left: 3px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .file-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left-color: var(--accent-color);
+        }
+        
+        .file-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .file-name {
+            flex-grow: 1;
+        }
+        
+        .file-size {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-left: 10px;
+        }
+        
+        .code-block {
+            background-color: #000;
+            color: #0f0;
+            padding: 20px;
+            border-radius: 5px;
+            font-family: 'Consolas', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            border-left: 4px solid var(--accent-color);
+            font-size: 0.9rem;
+        }
+        
+        .terminal {
+            background-color: #000;
+            color: #0f0;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Consolas', monospace;
+            border: 1px solid var(--border-color);
+        }
+        
+        .terminal-line {
+            margin-bottom: 8px;
+        }
+        
+        .terminal-prompt {
+            color: #0af;
+        }
+        
+        .terminal-command {
+            color: #0f0;
+        }
+        
+        .terminal-output {
+            color: #aaa;
+        }
+        
+        .devcontainer-config {
+            background-color: rgba(0, 100, 255, 0.1);
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #0078d7;
+        }
+        
+        .language-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .python-badge {
+            background-color: var(--python-color);
+            color: white;
+        }
+        
+        .js-badge {
+            background-color: var(--js-color);
+            color: black;
+        }
+        
+        .html-badge {
+            background-color: var(--html-color);
+            color: white;
+        }
+        
+        .css-badge {
+            background-color: var(--css-color);
+            color: white;
+        }
+        
+        .ps-badge {
+            background-color: var(--ps-color);
+            color: white;
+        }
+        
+        .reuse-analysis {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .reuse-card {
+            background-color: rgba(15, 138, 95, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            border: 1px solid rgba(15, 138, 95, 0.3);
+        }
+        
+        .reuse-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--accent-color);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .inventory-form {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+        
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+        
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+        
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+        
+        .btn:hover {
+            background-color: var(--hover-color);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .action-buttons {
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                width: 100%;
+                text-align: left;
+            }
+            
+            .inventory-grid, .reuse-analysis {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AURA Enhanced - Project Inventory & Structure Analysis</h1>
+            <div class="subtitle">VS Code | DevContainers | Python | PowerShell | Notepad++ Inventory Assessment</div>
+            <p>Systematic analysis of existing project components to accelerate proprietary parser development</p>
+        </header>
+        
+        <nav>
+            <ul class="tabs">
+                <li class="tab active" data-tab="inventory">Project Inventory</li>
+                <li class="tab" data-tab="vs-structure">VS Code Structure</li>
+                <li class="tab" data-tab="devcontainer">DevContainer Config</li>
+                <li class="tab" data-tab="python-env">Python Environment</li>
+                <li class="tab" data-tab="reuse-analysis">Reuse Analysis</li>
+                <li class="tab" data-tab="next-steps">Next Steps</li>
+            </ul>
+        </nav>
+        
+        <main>
+            <!-- Project Inventory Tab -->
+            <section class="tab-content active" id="inventory-content">
+                <div class="section">
+                    <h2>Current Project Inventory Assessment</h2>
+                    <p>Let's systematically inventory your current VS Code project structure to identify reusable components.</p>
+                    
+                    <div class="terminal">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">C:\AURA_Enhanced></span>
+                            <span class="terminal-command">dir /s /b</span>
+                        </div>
+                        <div class="terminal-output">
+                            C:\AURA_Enhanced\AURA_Enhanced_Screenplay_v2.1.html<br>
+                            C:\AURA_Enhanced\AURA_Enhanced_Screenplay_v2.5.html<br>
+                            C:\AURA_Enhanced\AURA_Enhanced_Screenplay_FIXED_v2.1.html<br>
+                            C:\AURA_Enhanced\README.md<br>
+                            C:\AURA_Enhanced\.git<br>
+                            C:\AURA_Enhanced\.vscode<br>
+                            C:\AURA_Enhanced\.devcontainer<br>
+                            C:\AURA_Enhanced\scripts<br>
+                            C:\AURA_Enhanced\assets<br>
+                            C:\AURA_Enhanced\docs<br>
+                            C:\AURA_Enhanced\analysis_output<br>
+                        </div>
+                    </div>
+                    
+                    <div class="inventory-form">
+                        <h3>Inventory Your Current Files</h3>
+                        <p>Please run this PowerShell command in your project root and paste the output:</p>
+                        
+                        <div class="code-block">
+# PowerShell command to generate comprehensive inventory
+Get-ChildItem -Recurse -File | Select-Object FullName, Length, LastWriteTime | 
+Format-Table -AutoSize | Out-String -Width 200
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="psOutput">Paste PowerShell Output Here:</label>
+                            <textarea id="psOutput" placeholder="Paste the output from the PowerShell command here..."></textarea>
+                        </div>
+                        
+                        <button class="btn" onclick="analyzeInventory()">Analyze Inventory</button>
+                        <button class="btn btn-secondary" onclick="loadSampleInventory()">Load Sample Inventory</button>
+                    </div>
+                </div>
+                
+                <div class="section" id="inventoryResults" style="display: none;">
+                    <h3>Inventory Analysis Results</h3>
+                    <div id="inventoryAnalysis"></div>
+                </div>
+            </section>
+            
+            <!-- VS Code Structure Tab -->
+            <section class="tab-content" id="vs-structure-content">
+                <div class="section">
+                    <h2>VS Code Project Structure Analysis</h2>
+                    <p>Analysis of your VS Code workspace configuration and project organization.</p>
+                    
+                    <div class="inventory-grid">
+                        <div class="inventory-card">
+                            <div class="inventory-title">.vscode/ Directory Structure</div>
+                            <ul class="file-list">
+                                <li class="file-item">
+                                    <span class="file-icon">⚙️</span>
+                                    <span class="file-name">settings.json</span>
+                                    <span class="language-badge js-badge">JSON</span>
+                                </li>
+                                <li class="file-item">
+                                    <span class="file-icon">🎯</span>
+                                    <span class="file-name">tasks.json</span>
+                                    <span class="language-badge js-badge">JSON</span>
+                                </li>
+                                <li class="file-item">
+                                    <span class="file-icon">🐛</span>
+                                    <span class="file-name">launch.json</span>
+                                    <span class="language-badge js-badge">JSON</span>
+                                </li>
+                                <li class="file-item">
+                                    <span class="file-icon">📋</span>
+                                    <span class="file-name">extensions.json</span>
+                                    <span class="language-badge js-badge">JSON</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="inventory-card">
+                            <div class="inventory-title">Recommended VS Code Extensions</div>
+                            <ul class="file-list">
+                                <li class="file-item">
+                                    <span class="file-icon">🐍</span>
+                                    <span class="file-name">Python Extension</span>
+                                    <span class="language-badge python-badge">Python</span>
+                                </li>
+                                <li class="file-item">
+                                    <span class="file-icon">📊</span>
+                                    <span class="file-name">Jupyter Notebooks</span>
+                                    <span class="language-badge python-badge">ML</span>
+                                </li>
+                                <li class="file-item">
+                                    <span class="file-icon">🔧</span>
+                                    <span class="file-name">Docker Extension</span>
+                                    <span class="language-badge">DevOps</span>
+                                </li>
+                                <li class="file-item">
+                                    <span class="file-icon">📝</span>
+                                    <span class="file-name">Markdown Preview</span>
+                                    <span class="language-badge">Docs</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3>Sample VS Code Settings Configuration</h3>
+                    <div class="code-block">
+// .vscode/settings.json - Optimized for AURA Enhanced Development
+{
+    "python.defaultInterpreterPath": "/usr/local/bin/python3",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": ["--line-length", "100"],
+    "python.testing.pytestEnabled": true,
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "files.autoSave": "afterDelay",
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.pytest_cache": true,
+        "**/*.pyc": true
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    }
+}
+                    </div>
+                    
+                    <div class="tip-box">
+                        <strong>Pro Tip:</strong> Use workspace-specific settings to ensure consistent development environment across your team.
+                    </div>
+                </div>
+            </section>
+            
+            <!-- DevContainer Config Tab -->
+            <section class="tab-content" id="devcontainer-content">
+                <div class="section">
+                    <h2>DevContainer Configuration Analysis</h2>
+                    <p>Docker and DevContainer setup for consistent development environment.</p>
+                    
+                    <div class="devcontainer-config">
+                        <h3>Recommended DevContainer Configuration</h3>
+                        <div class="code-block">
+// .devcontainer/devcontainer.json
+{
+    "name": "AURA Enhanced Development",
+    "dockerFile": "Dockerfile",
+    
+    // VS Code settings to apply
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "python.pythonPath": "/usr/local/bin/python",
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true
+    },
+    
+    // Extensions to install
+    "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter",
+        "ms-azuretools.vscode-docker",
+        "visualstudioexptteam.vscodeintellicode"
+    ],
+    
+    // Port forwarding
+    "forwardPorts": [5000, 8888],
+    
+    // Post-create commands
+    "postCreateCommand": "pip install -r requirements.txt && pip install -e .",
+    
+    // Remote user
+    "remoteUser": "vscode"
+}
+                        </div>
+                    </div>
+                    
+                    <div class="code-block">
+# .devcontainer/Dockerfile
+FROM python:3.9-slim
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    wget \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user
+RUN useradd -m -s /bin/bash vscode && \
+    usermod -aG sudo vscode && \
+    echo "vscode ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Switch to vscode user
+USER vscode
+WORKDIR /workspace
+
+# Copy requirements and install Python packages
+COPY requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+# Install development tools
+RUN pip install black flake8 pytest pylint mypy
+
+# Set up bash configuration
+RUN echo 'export PS1="\[\033[01;32m\]\u@aura-dev\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "' >> ~/.bashrc
+                    </div>
+                    
+                    <div class="code-block">
+# requirements.txt - Core dependencies for AURA ProParser
+# Web Framework
+Flask==2.3.2
+Flask-CORS==4.0.0
+Flask-RESTful==0.3.10
+
+# Data Processing
+pandas==2.0.3
+numpy==1.24.3
+scikit-learn==1.3.0
+
+# Natural Language Processing
+nltk==3.8.1
+spacy==3.6.1
+python-docx==0.8.11
+pdfplumber==0.10.2
+xmltodict==0.13.0
+
+# Machine Learning
+tensorflow==2.13.0
+torch==2.0.1
+transformers==4.31.0
+
+# Database
+sqlalchemy==2.0.19
+alembic==1.12.0
+
+# Testing
+pytest==7.4.0
+pytest-cov==4.1.0
+
+# Development
+black==23.7.0
+flake8==6.0.0
+mypy==1.5.0
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Python Environment Tab -->
+            <section class="tab-content" id="python-env-content">
+                <div class="section">
+                    <h2>Python Environment & Dependencies</h2>
+                    <p>Analysis of Python setup for proprietary parser development.</p>
+                    
+                    <div class="terminal">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">(aura-env) C:\AURA_Enhanced></span>
+                            <span class="terminal-command">python --version</span>
+                        </div>
+                        <div class="terminal-output">Python 3.9.13</div>
+                        
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">(aura-env) C:\AURA_Enhanced></span>
+                            <span class="terminal-command">pip list</span>
+                        </div>
+                        <div class="terminal-output">
+                            Package         Version<br>
+                            -------------- -------<br>
+                            Flask           2.3.2<br>
+                            pandas          2.0.3<br>
+                            numpy           1.24.3<br>
+                            scikit-learn    1.3.0<br>
+                            nltk            3.8.1<br>
+                            pytest          7.4.0<br>
+                            black           23.7.0<br>
+                            ...             ...
+                        </div>
+                    </div>
+                    
+                    <h3>Recommended Python Project Structure</h3>
+                    <div class="code-block">
+aura_enhanced/
+├── aura_enhanced/
+│   ├── __init__.py
+│   ├── main.py              # Flask application entry point
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── routes.py        # API endpoints
+│   │   └── schemas.py       # Pydantic schemas
+│   ├── parser/
+│   │   ├── __init__.py
+│   │   ├── base_parser.py   # Base parser class
+│   │   ├── fountain_parser.py
+│   │   ├── finaldraft_parser.py
+│   │   ├── pdf_parser.py
+│   │   └── celtx_parser.py
+│   ├── ml/
+│   │   ├── __init__.py
+│   │   ├── screenplay_model.py
+│   │   ├── character_analyzer.py
+│   │   └── budget_predictor.py
+│   ├── database/
+│   │   ├── __init__.py
+│   │   ├── models.py
+│   │   └── crud.py
+│   └── utils/
+│       ├── __init__.py
+│       ├── file_utils.py
+│       └── validation.py
+├── tests/
+│   ├── __init__.py
+│   ├── test_parsers.py
+│   └── test_api.py
+├── scripts/
+│   ├── setup_db.py
+│   └── train_models.py
+├── requirements.txt
+├── requirements-dev.txt
+├── setup.py
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
+                    </div>
+                    
+                    <h3>PowerShell Setup Scripts</h3>
+                    <div class="code-block">
+# scripts/setup.ps1 - PowerShell setup script for AURA Enhanced
+$ErrorActionPreference = "Stop"
+
+Write-Host "Setting up AURA Enhanced development environment..." -ForegroundColor Green
+
+# Check Python installation
+if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
+    Write-Host "Python not found. Installing Python 3.9..." -ForegroundColor Yellow
+    winget install Python.Python.3.9
+}
+
+# Create virtual environment
+Write-Host "Creating virtual environment..." -ForegroundColor Green
+python -m venv aura-env
+
+# Activate virtual environment
+Write-Host "Activating virtual environment..." -ForegroundColor Green
+.\aura-env\Scripts\Activate.ps1
+
+# Upgrade pip
+python -m pip install --upgrade pip
+
+# Install dependencies
+Write-Host "Installing dependencies..." -ForegroundColor Green
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+
+# Install spaCy model
+Write-Host "Downloading spaCy model..." -ForegroundColor Green
+python -m spacy download en_core_web_sm
+
+# Set up pre-commit hooks
+Write-Host "Setting up pre-commit hooks..." -ForegroundColor Green
+pre-commit install
+
+Write-Host "Setup complete! Activate with: .\aura-env\Scripts\Activate.ps1" -ForegroundColor Green
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Reuse Analysis Tab -->
+            <section class="tab-content" id="reuse-analysis-content">
+                <div class="section">
+                    <h2>Reusable Components Analysis</h2>
+                    <p>Identifying existing components that can accelerate proprietary parser development.</p>
+                    
+                    <div class="reuse-analysis">
+                        <div class="reuse-card">
+                            <div class="reuse-title">Frontend Components</div>
+                            <p><strong>Current Status:</strong> Complete HTML/CSS/JS frontend</p>
+                            <p><strong>Reusability:</strong> 90%</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 90%"></div>
+                            </div>
+                            <ul>
+                                <li>UI Design & Layout</li>
+                                <li>File upload components</li>
+                                <li>Tab navigation system</li>
+                                <li>Export functionality</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="reuse-card">
+                            <div class="reuse-title">File Processing Logic</div>
+                            <p><strong>Current Status:</strong> Basic conversion logic</p>
+                            <p><strong>Reusability:</strong> 60%</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                            <ul>
+                                <li>File type detection</li>
+                                <li>Basic parsing patterns</li>
+                                <li>Error handling framework</li>
+                                <li>Progress tracking system</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="reuse-card">
+                            <div class="reuse-title">Analysis Algorithms</div>
+                            <p><strong>Current Status:</strong> Statistical analysis</p>
+                            <p><strong>Reusability:</strong> 40%</p>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 40%"></div>
+                            </div>
+                            <ul>
+                                <li>Character dialogue distribution</li>
+                                <li>Scene breakdown logic</li>
+                                <li>Readability scoring</li>
+                                <li>Basic metrics calculation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3>Code Migration Strategy</h3>
+                    <div class="code-block">
+# Migration from current HTML to Python backend
+# Current JavaScript conversion logic:
+
+# File: AURA_Enhanced_Screenplay_v2.5.html (lines 800-900)
+# JavaScript conversion functions for Final Draft, PDF, Celtx
+
+# To be migrated to Python:
+
+def convert_finaldraft_to_fountain(fdx_content):
+    """Convert Final Draft FDX XML to Fountain format"""
+    # Logic from JavaScript: convertFinalDraft()
+    # Will be enhanced with proper XML parsing
+    
+def extract_text_from_pdf(pdf_path):
+    """Extract screenplay text from PDF"""
+    # Logic from JavaScript: convertPDF()
+    # Enhanced with pdfplumber for better accuracy
+    
+def parse_celtx_project(celtx_file):
+    """Parse Celtx project file"""
+    # Logic from JavaScript: convertCeltx()
+    # Enhanced with proper project structure parsing
+                    </div>
+                    
+                    <h3>Notepad++ Workflow Integration</h3>
+                    <div class="code-block">
+# PowerShell script to automate Notepad++ workflow
+# scripts/notepad_workflow.ps1
+
+$screenplayFiles = Get-ChildItem -Path ".\screenplays" -Filter "*.fountain" -Recurse
+
+foreach ($file in $screenplayFiles) {
+    # Open in Notepad++
+    Start-Process "C:\Program Files\Notepad++\notepad++.exe" -ArgumentList $file.FullName
+    
+    # Wait for editing
+    Start-Sleep -Seconds 2
+    
+    # Run analysis
+    python .\aura_enhanced\analyze.py $file.FullName
+    
+    # Generate report
+    python .\aura_enhanced\generate_report.py $file.FullName --format pdf
+}
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Next Steps Tab -->
+            <section class="tab-content" id="next-steps-content">
+                <div class="section">
+                    <h2>Immediate Next Steps</h2>
+                    <p>Actionable steps to accelerate proprietary parser development.</p>
+                    
+                    <div class="inventory-grid">
+                        <div class="inventory-card">
+                            <div class="inventory-title">Step 1: Project Structure Setup</div>
+                            <ul class="file-list">
+                                <li class="file-item">
+                                    <span class="file-icon">📁</span>
+                                    <span class="file-name">Create project directory structure</span>
+                                </li>
+                                <li class="file-item">
+                                    <span class="file-icon">🐍</span>
+                                    <span class="file-name">Set up Python virtual environment</span>
+                                </li>
+                                <li class="file-item">
+                                    <span class="file-icon">🐋</span>
+                                    <span class="file-name">Configure DevContainer</span>
+                                </li>
+                                <li class="file-item">
+                                    <span class="file-icon">🔧</span>
+                                    <span class="file-name">Configure VS Code settings</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="inventory-card">
+                            <div class="inventory-title">Step 2: Code Migration</div>
+                            <ul class="file-list">
+                                <li class="file-item">
+                                    <span class="file-icon">📄</span>
+                                    <span class="file-name">Extract JavaScript logic to Python</span>
+                                </li>
+                                <li class="file-item">
+                                    <span class="file-icon">⚡</span>
+                                    <span class="file-name">Create Flask API endpoints</span>
+                                </li>
+                                <li class="file-item">
+                                    <span class="file-icon">🔄</span>
+                                    <span class="file-name">Update frontend to use API</span>
+                                </li>
+                                <li class="file-item">
+                                    <span class="file-icon">🧪</span>
+                                    <span class="file-name">Write unit tests</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3>PowerShell Automation Scripts</h3>
+                    <div class="code-block">
+# scripts/initialize_project.ps1
+param(
+    [string]$ProjectName = "aura_enhanced",
+    [string]$PythonVersion = "3.9"
+)
+
+Write-Host "Initializing $ProjectName project..." -ForegroundColor Green
+
+# Create directory structure
+$directories = @(
+    "$ProjectName",
+    "$ProjectName/api",
+    "$ProjectName/parser",
+    "$ProjectName/ml",
+    "$ProjectName/database",
+    "$ProjectName/utils",
+    "tests",
+    "scripts",
+    "data",
+    "docs"
+)
+
+foreach ($dir in $directories) {
+    New-Item -ItemType Directory -Force -Path $dir
+    Write-Host "Created: $dir"
+}
+
+# Create Python virtual environment
+python -m venv .venv
+
+# Create basic files
+$basicFiles = @{
+    "requirements.txt" = "# Python dependencies"
+    "requirements-dev.txt" = "# Development dependencies"
+    "setup.py" = "# Package setup"
+    "Dockerfile" = "# Docker configuration"
+    "docker-compose.yml" = "# Docker Compose configuration"
+    ".gitignore" = "# Git ignore file"
+    "README.md" = "# Project documentation"
+}
+
+foreach ($file in $basicFiles.Keys) {
+    Set-Content -Path $file -Value $basicFiles[$file]
+    Write-Host "Created: $file"
+}
+
+Write-Host "Project initialized successfully!" -ForegroundColor Green
+Write-Host "Next steps:" -ForegroundColor Yellow
+Write-Host "1. Activate virtual environment: .venv\Scripts\Activate.ps1"
+Write-Host "2. Install dependencies: pip install -r requirements.txt"
+Write-Host "3. Start development!" -ForegroundColor Green
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn" onclick="generateProjectStructure()">Generate Project Structure</button>
+                        <button class="btn btn-secondary" onclick="downloadSetupScripts()">Download Setup Scripts</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Tab navigation
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to current tab and content
+                this.classList.add('active');
+                document.getElementById(`${tabId}-content`).classList.add('active');
+            });
+        });
+        
+        function analyzeInventory() {
+            const psOutput = document.getElementById('psOutput').value;
+            if (!psOutput.trim()) {
+                alert('Please paste the PowerShell output first.');
+                return;
+            }
+            
+            // Parse the PowerShell output
+            const lines = psOutput.split('\n');
+            const files = [];
+            
+            // Simple parsing logic - adjust based on actual output format
+            for (const line of lines) {
+                if (line.trim() && !line.includes('----') && !line.includes('FullName')) {
+                    const parts = line.trim().split(/\s+/);
+                    if (parts.length >= 2) {
+                        const fullPath = parts.slice(0, -2).join(' ');
+                        const size = parts[parts.length - 2];
+                        const date = parts[parts.length - 1];
+                        
+                        if (fullPath && !fullPath.includes('Directory:')) {
+                            files.push({
+                                path: fullPath,
+                                size: size,
+                                date: date
+                            });
+                        }
+                    }
+                }
+            }
+            
+            // Display analysis
+            const inventoryResults = document.getElementById('inventoryResults');
+            const inventoryAnalysis = document.getElementById('inventoryAnalysis');
+            
+            inventoryResults.style.display = 'block';
+            
+            // Categorize files
+            const categories = {
+                html: { count: 0, size: 0, files: [] },
+                css: { count: 0, size: 0, files: [] },
+                js: { count: 0, size: 0, files: [] },
+                python: { count: 0, size: 0, files: [] },
+                config: { count: 0, size: 0, files: [] },
+                docs: { count: 0, size: 0, files: [] },
+                other: { count: 0, size: 0, files: [] }
+            };
+            
+            files.forEach(file => {
+                const ext = file.path.toLowerCase().split('.').pop();
+                if (ext === 'html') {
+                    categories.html.count++;
+                    categories.html.files.push(file);
+                } else if (ext === 'css') {
+                    categories.css.count++;
+                    categories.css.files.push(file);
+                } else if (ext === 'js') {
+                    categories.js.count++;
+                    categories.js.files.push(file);
+                } else if (ext === 'py') {
+                    categories.python.count++;
+                    categories.python.files.push(file);
+                } else if (file.path.includes('.vscode') || file.path.includes('.devcontainer')) {
+                    categories.config.count++;
+                    categories.config.files.push(file);
+                } else if (ext === 'md' || ext === 'txt' || ext === 'pdf') {
+                    categories.docs.count++;
+                    categories.docs.files.push(file);
+                } else {
+                    categories.other.count++;
+                    categories.other.files.push(file);
+                }
+            });
+            
+            // Generate analysis HTML
+            let html = '<div class="inventory-grid">';
+            
+            for (const [category, data] of Object.entries(categories)) {
+                if (data.count > 0) {
+                    html += `
+                    <div class="inventory-card">
+                        <div class="inventory-title">${category.toUpperCase()} Files (${data.count})</div>
+                        <ul class="file-list">
+                    `;
+                    
+                    // Show first 5 files
+                    data.files.slice(0, 5).forEach(file => {
+                        html += `
+                        <li class="file-item">
+                            <span class="file-icon">📄</span>
+                            <span class="file-name">${file.path.split('\\').pop()}</span>
+                            <span class="file-size">${file.size}</span>
+                        </li>
+                        `;
+                    });
+                    
+                    if (data.files.length > 5) {
+                        html += `<li class="file-item">... and ${data.files.length - 5} more</li>`;
+                    }
+                    
+                    html += `</ul></div>`;
+                }
+            }
+            
+            html += '</div>';
+            inventoryAnalysis.innerHTML = html;
+            
+            // Scroll to results
+            inventoryResults.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function loadSampleInventory() {
+            const sampleOutput = `C:\\AURA_Enhanced\\AURA_Enhanced_Screenplay_v2.5.html    24576   2024-01-15
+C:\\AURA_Enhanced\\README.md                          1024    2024-01-10
+C:\\AURA_Enhanced\\.vscode\\settings.json             2048    2024-01-12
+C:\\AURA_Enhanced\\.devcontainer\\devcontainer.json   4096    2024-01-08
+C:\\AURA_Enhanced\\scripts\\setup.ps1                 5120    2024-01-14
+C:\\AURA_Enhanced\\scripts\\analyze.py                8192    2024-01-13
+C:\\AURA_Enhanced\\assets\\logo.png                   15360   2024-01-05
+C:\\AURA_Enhanced\\docs\\user_guide.md                3072    2024-01-11
+C:\\AURA_Enhanced\\tests\\test_parser.py              6144    2024-01-09
+C:\\AURA_Enhanced\\analysis_output\\sample_report.pdf 20480   2024-01-14`;
+            
+            document.getElementById('psOutput').value = sampleOutput;
+        }
+        
+        function generateProjectStructure() {
+            // Create a JSON structure for the project
+            const projectStructure = {
+                "name": "aura_enhanced",
+                "structure": {
+                    "aura_enhanced/": {
+                        "__init__.py": "# Package initialization",
+                        "main.py": "# Flask application entry point",
+                        "api/": {
+                            "__init__.py": "",
+                            "routes.py": "# API endpoints",
+                            "schemas.py": "# Pydantic schemas"
+                        },
+                        "parser/": {
+                            "__init__.py": "",
+                            "base_parser.py": "# Base parser class",
+                            "fountain_parser.py": "# Fountain format parser",
+                            "finaldraft_parser.py": "# Final Draft parser",
+                            "pdf_parser.py": "# PDF screenplay parser",
+                            "celtx_parser.py": "# Celtx parser"
+                        },
+                        "ml/": {
+                            "__init__.py": "",
+                            "screenplay_model.py": "# ML model for screenplay analysis",
+                            "character_analyzer.py": "# Character analysis",
+                            "budget_predictor.py": "# Budget prediction model"
+                        }
+                    },
+                    "tests/": {
+                        "__init__.py": "",
+                        "test_parsers.py": "# Parser unit tests",
+                        "test_api.py": "# API endpoint tests"
+                    },
+                    "scripts/": {
+                        "setup.ps1": "# PowerShell setup script",
+                        "initialize_project.ps1": "# Project initialization",
+                        "train_models.py": "# Model training script"
+                    },
+                    "requirements.txt": "# Python dependencies",
+                    "requirements-dev.txt": "# Development dependencies",
+                    "Dockerfile": "# Docker configuration",
+                    "docker-compose.yml": "# Docker Compose",
+                    ".devcontainer/": {
+                        "devcontainer.json": "# VS Code DevContainer config"
+                    },
+                    ".vscode/": {
+                        "settings.json": "# VS Code workspace settings",
+                        "tasks.json": "# Build tasks"
+                    }
+                }
+            };
+            
+            // Convert to downloadable text
+            const structureText = JSON.stringify(projectStructure, null, 2);
+            const blob = new Blob([structureText], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'aura_enhanced_structure.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('Project structure JSON downloaded! Use scripts/initialize_project.ps1 to create the actual structure.');
+        }
+        
+        function downloadSetupScripts() {
+            const scripts = {
+                "initialize_project.ps1": document.querySelector('#next-steps-content .code-block').textContent,
+                "setup.ps1": document.querySelector('#python-env-content .code-block').textContent,
+                "notepad_workflow.ps1": document.querySelector('#reuse-analysis-content .code-block:nth-of-type(2)').textContent
+            };
+            
+            // Create a zip file or individual downloads
+            for (const [filename, content] of Object.entries(scripts)) {
+                const blob = new Blob([content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+            
+            alert('Setup scripts downloaded!');
+        }
+        
+        // Initialize with sample data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSampleInventory();
+        });
+    </script>
+</body>
+</html>

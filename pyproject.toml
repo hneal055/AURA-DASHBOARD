@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aura-budget-dashboard"
+version = "0.1.0"
+authors = [
+    {name = "Your Name", email = "your.email@example.com"},
+]
+description = "Budget analysis dashboard for expense visualization"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/yourusername/aura-dashboard"
+"Bug Tracker" = "https://github.com/yourusername/aura-dashboard/issues"

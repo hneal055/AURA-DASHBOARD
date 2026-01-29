@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Script Analysis Dashboard - THE BRUTALIST</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .dashboard {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dashboard-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            color: #feca57;
+        }
+
+        .dashboard-main {
+            display: grid;
+            gap: 30px;
+        }
+
+        .dashboard-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dashboard-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .dashboard-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: #feca57;
+            border-bottom: 2px solid rgba(254, 202, 87, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .visualization-container {
+            min-height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .loading { font-size: 1.1rem; opacity: 0.7; text-align: center; }
+        .error   { color: #ff6b6b; text-align: center; padding: 20px; }
+        .success { color: #1dd1a1; text-align: center; padding: 20px; }
+
+        .api-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 18px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+
+        .api-status.connected {
+            background: rgba(29, 209, 161, 0.3);
+            color: #1dd1a1;
+            border-color: rgba(29, 209, 161, 0.5);
+        }
+
+        .api-status.error {
+            background: rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+
+        .debug-panel {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+
+        .debug-button {
+            background: #feca57;
+            color: #1a1a2e;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .debug-button:hover { background: #ff9ff3; }
+
+        /* Network Visualization */
+        .network-visualization { width: 100%; }
+
+        .network-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .network-stats span {
+            background: rgba(255, 107, 107, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 107, 107, 0.5);
+        }
+
+        .network-graph {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .network-node {
+            background: linear-gradient(45deg, #ff6b6b, #ff9ff3);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            border: 2px solid white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Tier Visualization */
+        .tier-visualization { width: 100%; }
+
+        .tier-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .tier-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tier-label {
+            min-width: 80px;
+            font-weight: bold;
+            color: #feca57;
+        }
+
+        .tier-bar {
+            background: linear-gradient(90deg, #feca57, #ff9ff3);
+            height: 30px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            color: #1a1a2e;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+
+        .tier-bar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(254, 202, 87, 0.4);
+        }
+
+        .tier-characters {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-left: 10px;
+        }
+
+        /* Intensity Visualization */
+        .intensity-visualization { width: 100%; }
+
+        .intensity-chart {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .intensity-point {
+            background: linear-gradient(45deg, #48dbfb, #0abde3);
+            width: 50px;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 10px 5px;
+            color: #1a1a2e;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .intensity-point:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(72, 219, 251, 0.4);
+        }
+
+        .intensity-point .chapter {
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+        }
+
+        .intensity-point .level {
+            font-size: 1rem;
+        }
+
+        .intensity-labels {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .intensity-label {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 0 5px;
+            border-radius: 5px;
+        }
+
+        .intensity-label strong {
+            color: #48dbfb;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Data Display */
+        .data-display {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .data-display pre {
+            font-size: 0.8rem;
+            color: #feca57;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Debug Panel -->
+    <div class="debug-panel">
+        <strong>Debug Tools</strong>
+        <div>
+            <button class="debug-button" onclick="testAPIConnection()">Test API</button>
+            <button class="debug-button" onclick="loadAllData()">Reload Data</button>
+            <button class="debug-button" onclick="toggleDataDisplay()">Toggle JSON</button>
+        </div>
+    </div>
+
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <h1>🎭 Aura Script Analysis Dashboard</h1>
+            <p>Complete Visualization</p>
+        </header>
+
+        <main class="dashboard-main">
+
+            <!-- Upload Screenplay Section -->
+            <section class="dashboard-section">
+                <h2>Upload Screenplay</h2>
+                <input type="file" id="scriptFile"
+                       accept=".txt,.pdf,.fountain,.fdx,.doc,.docx"
+                       style="margin-bottom:10px;">
+                <button class="debug-button" onclick="uploadScript()">
+                    Upload & Analyze
+                </button>
+                <div id="upload-status" class="loading" style="margin-top:10px;">
+                    Waiting for file...
+                </div>
+            </section>
+
+            <!-- Character Network Section -->
+            <section class="dashboard-section">
+                <h2>Character Network</h2>
+                <div id="character-network" class="visualization-container">
+                    <div class="loading">Loading character relationships...</div>
+                </div>
+            </section>
+
+            <!-- Tier Distribution Section -->
+            <section class="dashboard-section">
+                <h2>Tier Distribution</h2>
+                <div id="tier-distribution" class="visualization-container">
+                    <div class="loading">Loading tier data...</div>
+                </div>
+            </section>
+
+            <!-- Narrative Intensity Section -->
+            <section class="dashboard-section">
+                <h2>Narrative Intensity</h2>
+                <div id="narrative-intensity" class="visualization-container">
+                    <div class="loading">Loading narrative data...</div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="dashboard-footer">
+            <div id="api-status" class="api-status">🔴 API Disconnected</div>
+        </footer>
+    </div>
+
+    <script>
+        class AuraDashboard {
+            constructor() {
+                this.API_BASE = 'http://localhost:8081/api';
+                this.data = {
+                    characterNetwork: null,
+                    tierDistribution: null,
+                    narrativeIntensity: null
+                };
+                this.showJsonData = false;
+
+                this.init();
+            }
+
+            async init() {
+                console.log('🚀 Initializing Aura Dashboard...');
+                console.log('📡 API Base URL:', this.API_BASE);
+
+                await this.testAPIConnection();
+                await this.loadAllData();
+                this.renderAllVisualizations();
+
+                console.log('✅ Dashboard initialization complete');
+            }
+
+            async testAPIConnection() {
+                try {
+                    const response = await fetch(`${this.API_BASE}/character-network`);
+                    if (response.ok) {
+                        this.updateAPIStatus('🟢 API Connected', 'connected');
+                        console.log('✅ API connection successful');
+                        return true;
+                    } else {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                } catch (error) {
+                    this.updateAPIStatus('🔴 API Error: ' + error.message, 'error');
+                    console.error('❌ API connection failed:', error);
+                    return false;
+                }
+            }
+
+            updateAPIStatus(message, type) {
+                const statusElement = document.getElementById('api-status');
+                statusElement.textContent = message;
+                statusElement.className = `api-status ${type}`;
+            }
+
+            async loadAllData() {
+                try {
+                    this.showLoadingStates();
+
+                    const [network, tiers, intensity] = await Promise.all([
+                        this.fetchData('/character-network'),
+                        this.fetchData('/tier-distribution'),
+                        this.fetchData('/narrative-intensity')
+                    ]);
+
+                    this.data.characterNetwork = network;
+                    this.data.tierDistribution = tiers;
+                    this.data.narrativeIntensity = intensity;
+
+                    console.log('✅ All data loaded successfully');
+                    this.updateAPIStatus('🟢 API Connected - Data Loaded', 'connected');
+
+                    this.renderAllVisualizations();
+                } catch (error) {
+                    console.error('❌ Failed to load data:', error);
+                    this.updateAPIStatus('🔴 Data Loading Failed', 'error');
+                    this.showErrorStates();
+                }
+            }
+
+            async fetchData(endpoint) {
+                console.log(`📥 Fetching: ${endpoint}`);
+                const response = await fetch(`${this.API_BASE}${endpoint}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} for ${endpoint}`);
+                }
+                const data = await response.json();
+                console.log(`✅ Received: ${endpoint}`, data);
+                return data;
+            }
+
+            showLoadingStates() {
+                document.getElementById('character-network').innerHTML =
+                    '<div class="loading">Loading character relationships...</div>';
+                document.getElementById('tier-distribution').innerHTML =
+                    '<div class="loading">Loading tier data...</div>';
+                document.getElementById('narrative-intensity').innerHTML =
+                    '<div class="loading">Loading narrative data...</div>';
+            }
+
+            showErrorStates() {
+                document.getElementById('character-network').innerHTML =
+                    '<div class="error">Failed to load character network</div>';
+                document.getElementById('tier-distribution').innerHTML =
+                    '<div class="error">Failed to load tier distribution</div>';
+                document.getElementById('narrative-intensity').innerHTML =
+                    '<div class="error">Failed to load narrative intensity</div>';
+            }
+
+            renderAllVisualizations() {
+                this.renderCharacterNetwork();
+                this.renderTierDistribution();
+                this.renderNarrativeIntensity();
+            }
+
+            renderCharacterNetwork() {
+                const container = document.getElementById('character-network');
+                const data = this.data.characterNetwork;
+
+                if (!data) {
+                    container.innerHTML =
+                        '<div class="error">No character network data available</div>';
+                    return;
+                }
+
+                const nodeCount = (data.nodes || []).length;
+                const linkCount = (data.links || []).length;
+                const strongestLink = (data.links || []).reduce(
+                    (max, link) => link.weight > (max.weight || 0) ? link : max,
+                    { weight: 0 }
+                );
+
+                let content = `
+                    <div class="network-visualization">
+                        <div class="network-stats">
+                            <span>Characters: ${nodeCount}</span>
+                            <span>Relationships (pairs): ${linkCount}</span>
+                            <span>Strongest bond: ${
+                                strongestLink.source
+                                    ? strongestLink.source + ' ⇄ ' + strongestLink.target +
+                                      ' (' + strongestLink.weight + ' shared scenes)'
+                                    : 'N/A'
+                            }</span>
+                        </div>
+                        <div class="network-graph">
+                `;
+
+                (data.nodes || []).forEach(node => {
+                    content += `<div class="network-node">${node.name}</div>`;
+                });
+
+                content += `</div>`;
+
+                if (this.showJsonData) {
+                    content += `<div class="data-display"><pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+                }
+
+                content += `</div>`;
+                container.innerHTML = content;
+            }
+
+            renderTierDistribution() {
+                const container = document.getElementById('tier-distribution');
+                const data = this.data.tierDistribution;
+
+                if (!data) {
+                    container.innerHTML =
+                        '<div class="error">No tier distribution data available</div>';
+                    return;
+                }
+
+                let content = `
+                    <div class="tier-visualization">
+                        <div class="tier-bars">
+                `;
+
+                (data.tiers || []).forEach(tier => {
+                    const barWidth = Math.max(tier.count * 40, 100);
+                    content += `
+                        <div class="tier-bar-container">
+                            <div class="tier-label">${tier.tier} Tier</div>
+                            <div class="tier-bar" style="width: ${barWidth}px;">
+                                ${tier.count} characters
+                            </div>
+                            <div class="tier-characters">
+                                ${tier.characters ? tier.characters.join(', ') : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                content += `</div>`;
+
+                if (this.showJsonData) {
+                    content += `<div class="data-display"><pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+                }
+
+                content += `</div>`;
+                container.innerHTML = content;
+            }
+
+            renderNarrativeIntensity() {
+                const container = document.getElementById('narrative-intensity');
+                const data = this.data.narrativeIntensity;
+
+                if (!data) {
+                    container.innerHTML =
+                        '<div class="error">No narrative intensity data available</div>';
+                    return;
+                }
+
+                const points = data.intensity || [];
+
+                let content = `
+                    <div class="intensity-visualization">
+                        <div class="intensity-chart">
+                `;
+
+                points.forEach(point => {
+                    const height = point.intensity * 100;
+                    content += `
+                        <div class="intensity-point" style="height: ${height}%">
+                            <span class="chapter">Ch. ${point.chapter}</span>
+                            <span class="level">${point.intensity}</span>
+                        </div>
+                    `;
+                });
+
+                content += `</div>
+                            <div class="intensity-labels">`;
+
+                points.forEach(point => {
+                    content += `
+                        <div class="intensity-label">
+                            <strong>${point.title}</strong>
+                            Intensity: ${point.intensity}
+                        </div>
+                    `;
+                });
+
+                content += `</div>`;
+
+                if (this.showJsonData) {
+                    content += `<div class="data-display"><pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+                }
+
+                content += `</div>`;
+                container.innerHTML = content;
+            }
+
+            toggleJsonData() {
+                this.showJsonData = !this.showJsonData;
+                this.renderAllVisualizations();
+            }
+        }
+
+        // Global functions for debug panel
+        function testAPIConnection() {
+            const dashboard = window.auraDashboard;
+            dashboard.testAPIConnection();
+        }
+
+        function loadAllData() {
+            const dashboard = window.auraDashboard;
+            dashboard.loadAllData();
+        }
+
+        function toggleDataDisplay() {
+            const dashboard = window.auraDashboard;
+            dashboard.toggleJsonData();
+        }
+
+        async function uploadScript() {
+            const fileInput = document.getElementById('scriptFile');
+            const status = document.getElementById('upload-status');
+            const dashboard = window.auraDashboard;
+
+            if (!fileInput.files.length) {
+                status.textContent = 'No file selected.';
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            status.textContent = 'Uploading & analyzing...';
+
+            try {
+                const response = await fetch(`${dashboard.API_BASE}/upload-script`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                dashboard.data.characterNetwork   = data.characterNetwork;
+                dashboard.data.tierDistribution   = data.tierDistribution;
+                dashboard.data.narrativeIntensity = data.narrativeIntensity;
+
+                dashboard.renderAllVisualizations();
+                dashboard.updateAPIStatus('🟢 API Connected - Analysis Updated', 'connected');
+                status.textContent = 'Analysis complete ✔';
+            } catch (error) {
+                console.error('❌ Upload failed:', error);
+                status.textContent = 'Upload failed ❌';
+                dashboard.updateAPIStatus('🔴 Upload / Analysis Failed', 'error');
+            }
+        }
+
+        // Initialize the dashboard when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            window.auraDashboard = new AuraDashboard();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+@"
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AURA Dashboard</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        h1 { color: #1a2a6c; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 AURA Dashboard</h1>
+        <p><strong>Running in Docker Container!</strong></p>
+        <p>✅ Successfully deployed</p>
+        <p>📍 Location: $(Get-Location)</p>
+    </div>
+</body>
+</html>
+"@ | Out-File -FilePath "src\index.html" -Encoding UTF8
