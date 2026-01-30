@@ -229,7 +229,8 @@ def show_results(file_id):
     template_data = {
         'filename': data['filename'],
         'timestamp': data['timestamp'].strftime('%B %d, %Y at %I:%M %p'),
-        'analysis': data['analysis']
+        'analysis': data['analysis'],
+        'chart_colors': ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c', '#e67e22']
     }
 
     return render_template('results.html', **template_data)

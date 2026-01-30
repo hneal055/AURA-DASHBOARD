@@ -173,6 +173,67 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Charts Section */
+.charts-section {
+    margin: 40px 0;
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.chart-container {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border: 1px solid rgba(102, 126, 234, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chart-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+}
+
+.chart-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d3436;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chart-canvas-wrapper {
+    position: relative;
+    height: 300px;
+    margin: 0 auto;
+}
+
+.chart-canvas-wrapper canvas {
+    max-height: 100%;
+}
+
+/* Full-width charts */
+.chart-container.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Small gauge chart */
+.chart-container.gauge {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.chart-container.gauge .chart-canvas-wrapper {
+    height: 200px;
+}
+
 /* Health Score Badge */
 .health-score-badge {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -342,6 +403,16 @@ body {
 }
 
 /* Responsive */
+@media (max-width: 968px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .chart-canvas-wrapper {
+        height: 250px;
+    }
+}
+
 @media (max-width: 768px) {
     .container { padding: 15px; }
     .header h1 { font-size: 2rem; }
@@ -360,5 +431,15 @@ body {
     .mini-table th,
     .mini-table td {
         padding: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chart-canvas-wrapper {
+        height: 220px;
+    }
+
+    .chart-title {
+        font-size: 1rem;
     }
 }

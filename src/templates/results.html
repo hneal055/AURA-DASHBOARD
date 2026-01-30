@@ -33,6 +33,57 @@
         </div>
     </div>
 
+    <!-- Data Visualizations -->
+    <div class="charts-section fade-in">
+        <h2 style="margin-bottom: 20px; color: #2d3436;">📊 Visual Analysis</h2>
+
+        <div class="charts-grid">
+            <!-- Department Budget Allocation Chart -->
+            <div class="chart-container">
+                <h3 class="chart-title">
+                    <span>🏢</span> Department Budget Allocation
+                </h3>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="deptDoughnutChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Category Breakdown Chart -->
+            <div class="chart-container">
+                <h3 class="chart-title">
+                    <span>📂</span> Category Breakdown
+                </h3>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="categoryBarChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Budget Health Gauge -->
+            {% if analysis.health_score is defined %}
+            <div class="chart-container gauge">
+                <h3 class="chart-title">
+                    <span>💚</span> Budget Health Score
+                </h3>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="healthGaugeChart"></canvas>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Top Expenses Chart -->
+            {% if analysis.high_cost_items and analysis.high_cost_items|length > 0 %}
+            <div class="chart-container">
+                <h3 class="chart-title">
+                    <span>⚠️</span> Top 10 Highest Expenses
+                </h3>
+                <div class="chart-canvas-wrapper">
+                    <canvas id="topExpensesChart"></canvas>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
     <!-- Department Breakdown -->
     {% if analysis.departments %}
     <div class="card fade-in">
@@ -197,4 +248,240 @@
         <a href="/sample-csv" class="btn btn-secondary">📥 Download Sample CSV</a>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Chart colors from template
+    const chartColors = {{ chart_colors | tojson | safe }};
+
+    // ========================================================================
+    // 1. DEPARTMENT DOUGHNUT CHART
+    // ========================================================================
+    const deptCanvas = document.getElementById('deptDoughnutChart');
+    if (deptCanvas) {
+        const deptLabels = {{ analysis.departments.keys() | list | tojson | safe }};
+        const deptData = [
+            {% for dept, stats in analysis.departments.items() %}
+                {{ stats.total }}{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ];
+
+        new Chart(deptCanvas, {
+            type: 'doughnut',
+            data: {
+                labels: deptLabels,
+                datasets: [{
+                    data: deptData,
+                    backgroundColor: chartColors,
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            font: { size: 12 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((value / total) * 100).toFixed(1);
+                                return label + ': $' + value.toLocaleString() + ' (' + percentage + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // ========================================================================
+    // 2. CATEGORY BAR CHART
+    // ========================================================================
+    const catCanvas = document.getElementById('categoryBarChart');
+    if (catCanvas) {
+        const catLabels = {{ analysis.categories.keys() | list | tojson | safe }};
+        const catData = [
+            {% for cat, stats in analysis.categories.items() %}
+                {{ stats.total }}{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ];
+
+        // Sort by amount (descending)
+        const catSorted = catLabels.map((label, i) => ({label, value: catData[i]}))
+            .sort((a, b) => b.value - a.value);
+
+        new Chart(catCanvas, {
+            type: 'bar',
+            data: {
+                labels: catSorted.map(item => item.label),
+                datasets: [{
+                    label: 'Budget Amount',
+                    data: catSorted.map(item => item.value),
+                    backgroundColor: chartColors[0],
+                    borderColor: chartColors[0],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return '$' + context.parsed.x.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // ========================================================================
+    // 3. HEALTH GAUGE CHART (Semicircle)
+    // ========================================================================
+    {% if analysis.health_score is defined %}
+    const healthCanvas = document.getElementById('healthGaugeChart');
+    if (healthCanvas) {
+        const healthScore = {{ analysis.health_score }};
+
+        // Gauge color based on score
+        let gaugeColor = '#e74c3c'; // Red
+        if (healthScore >= 80) gaugeColor = '#2ecc71'; // Green
+        else if (healthScore >= 60) gaugeColor = '#f39c12'; // Orange
+
+        // Center text plugin
+        const centerTextPlugin = {
+            id: 'centerText',
+            afterDatasetDraw(chart) {
+                const { ctx, chartArea: { width, height } } = chart;
+                ctx.save();
+                ctx.font = 'bold 48px sans-serif';
+                ctx.fillStyle = gaugeColor;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(healthScore, width / 2, height / 2 + 20);
+                ctx.font = '14px sans-serif';
+                ctx.fillStyle = '#636e72';
+                ctx.fillText('Health Score', width / 2, height / 2 + 50);
+                ctx.restore();
+            }
+        };
+
+        new Chart(healthCanvas, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [healthScore, 100 - healthScore],
+                    backgroundColor: [gaugeColor, '#ecf0f1'],
+                    borderWidth: 0,
+                    circumference: 180,
+                    rotation: 270
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%',
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { enabled: false }
+                }
+            },
+            plugins: [centerTextPlugin]
+        });
+    }
+    {% endif %}
+
+    // ========================================================================
+    // 4. TOP EXPENSES CHART
+    // ========================================================================
+    {% if analysis.high_cost_items and analysis.high_cost_items|length > 0 %}
+    const topCanvas = document.getElementById('topExpensesChart');
+    if (topCanvas) {
+        const topItems = [
+            {% for item in analysis.high_cost_items[:10] %}
+                {
+                    description: "{{ item.get('Description', 'N/A')[:30] }}",
+                    amount: {{ item.get('Amount', 0) }}
+                }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ];
+
+        // Sort and get top 10
+        const sortedItems = topItems.sort((a, b) => b.amount - a.amount).slice(0, 10);
+
+        new Chart(topCanvas, {
+            type: 'bar',
+            data: {
+                labels: sortedItems.map(item => item.description),
+                datasets: [{
+                    label: 'Amount',
+                    data: sortedItems.map(item => item.amount),
+                    backgroundColor: 'rgba(231, 76, 60, 0.8)',
+                    borderColor: 'rgba(231, 76, 60, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return '$' + context.parsed.y.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            autoSkip: false,
+                            maxRotation: 45,
+                            minRotation: 45
+                        }
+                    }
+                }
+            }
+        });
+    }
+    {% endif %}
+});
+</script>
 {% endblock %}
