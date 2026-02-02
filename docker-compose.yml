@@ -1,27 +1,15 @@
 version: '3.8'
 
 services:
-  aura-dashboard:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        HTML_FILE: aura_dashboard_enhanced.html  # Change this to your HTML file name
-    container_name: aura-dashboard
+  web:
+    build: .
+    container_name: aura_dashboard
     ports:
-      - "8080:80"
-    environment:
-      - NGINX_HOST=localhost
-      - NGINX_PORT=80
+      - "5000:5000"
     volumes:
-      - ./logs/nginx:/var/log/nginx
+      - ./uploads:/app/uploads
+      - ./app.log:/app/app.log
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=prod-secret-key-change-me
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-networks:
-  default:
-    name: aura-network
