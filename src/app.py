@@ -20,8 +20,8 @@ from datetime import datetime
 from werkzeug.utils import secure_filename
 
 # Import analysis modules
-from src.models.budget_analyzer import BudgetAnalyzer
-from src.services.risk_manager import RiskManager
+from src.budget_analyzer import BudgetAnalyzer
+from risk_manager import RiskManager
 from src.services.recommendation_engine import RecommendationEngine
 
 # ============================================================================
@@ -262,3 +262,5 @@ if __name__ == '__main__':
         port=5000,
         threaded=True
     )
+
+
