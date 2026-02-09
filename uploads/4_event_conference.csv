@@ -1,0 +1,15 @@
+Description,Department,Category,Vendor,Amount
+Venue Rental (3 days),Venue,Location,Convention Center,25000
+"Catering (Breakfast, Lunch, Dinner)",Food & Beverage,Hospitality,Catering Co,18000
+Audio-Visual Equipment,Production,Equipment,AV Rentals,12000
+Keynote Speaker Fee,Talent,Professional,Speaker Bureau,15000
+Marketing & Promotion,Marketing,Advertising,Marketing Agency,8000
+Event Staff (50 people),Staffing,Personnel,Staffing Agency,20000
+Decorations & Theming,Design,Design,Design Studio,6000
+Registration System,Technology,Software,Eventbrite,3000
+"Print Materials (Badges, Programs)",Materials,Print,Print Shop,4000
+Security Services,Security,Security,Security Inc,5000
+WiFi & Internet,Technology,Technology,ISP Provider,2000
+Swag Bags & Giveaways,Attendees,Materials,Promo Items Co,5000
+Photography & Videography,Media,Media,Photo Studio,6000
+Contingency (15%),Contingency,Contingency,Internal,14700

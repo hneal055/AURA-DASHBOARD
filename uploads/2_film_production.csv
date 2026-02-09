@@ -1,0 +1,15 @@
+Description,Department,Category,Vendor,Amount
+Script Development,Pre-Production,Creative,Writer Studio,8000
+Director Fee,Production,Talent,Director LLC,25000
+Cinematographer,Production,Crew,DP Services,15000
+Camera Equipment Rental,Production,Equipment,Camera Rentals,12000
+Lighting Equipment,Production,Equipment,Lighting Co,8000
+Sound Equipment,Production,Equipment,Sound Pro,5000
+Actors,Talent,Talent,Talent Agency,40000
+Location Fees,Logistics,Location,Location Mgmt,15000
+Catering & Meals,Hospitality,Hospitality,Catering Co,10000
+Post-Production Editing,Post-Production,Editing,Edit Studio,20000
+Visual Effects,Post-Production,VFX,VFX House,15000
+Music Licensing,Post-Production,Music,Music Library,5000
+Insurance,Administrative,Insurance,Film Insure,3000
+Contingency (10%),Contingency,Contingency,Internal,17300

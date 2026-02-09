@@ -1,0 +1,15 @@
+Description,Department,Category,Vendor,Amount
+Executive Director Salary,Administration,Salaries,Internal,60000
+Program Staff Salaries,Programs,Salaries,Internal,80000
+Office Rent & Utilities,Operations,Facilities,Landlord,12000
+Program Materials & Supplies,Programs,Supplies,Various,5000
+Website & Technology,Operations,Technology,Web Developer,3000
+Fundraising Events,Fundraising,Events,Event Planner,8000
+Grant Writing Services,Fundraising,Professional Services,Grant Writer,5000
+Insurance & Legal,Administration,Insurance,Legal Firm,4000
+Travel for Field Work,Programs,Travel,Various,6000
+Volunteer Appreciation,Volunteers,Recognition,Internal,2000
+Marketing & Outreach,Marketing,Marketing,Marketing Agency,4000
+Professional Development,Staff Development,Training,Training Org,3000
+Bank Fees & Accounting,Finance,Finance,Bank,1000
+Miscellaneous (5%),Contingency,Contingency,Internal,4900

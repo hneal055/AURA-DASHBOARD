@@ -1,0 +1,16 @@
+Description,Department,Category,Vendor,Amount
+Very Small Item,IT,Software,Small Co,10
+Normal Item,Marketing,Advertising,Medium Co,5000
+Very Large Item (>50%),Executive,Bonus,Big Corp,75000
+Duplicate Entry,HR,Training,Training Inc,2000
+Duplicate Entry,HR,Training,Training Inc,2000
+Item with Missing Dept,,Supplies,Supply Co,300
+Item with Missing Category,Finance,,Finance Corp,800
+Negative Value (Credit/Refund),Accounting,Adjustment,Internal,-1500
+Zero Value Item,Testing,Test,Test Vendor,0
+Item with Special Characters: @#$%,Operations,Special,Special Vendor,2500
+Very Long Description That Might Break Layout Testing,Administrative,Administrative,Long Name Vendor Corp LLC,1800
+"Item with Commas, in description",Sales,Sales,"Sales, Inc",3200
+Multiple     Spaces,IT,IT,IT Vendor,950
+ALL CAPS ITEM,HR,HR,HR Services,1100
+mixed CASE Item,Marketing,Marketing,Marketing Agency,2750

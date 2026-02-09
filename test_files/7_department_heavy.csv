@@ -1,0 +1,21 @@
+Description,Department,Category,Vendor,Amount
+Engineering Cost 1,Engineering,Development,Internal,10000
+Engineering Cost 2,Engineering,Development,Internal,10000
+Engineering Cost 3,Engineering,Development,Internal,10000
+Engineering Cost 4,Engineering,Development,Internal,10000
+Engineering Cost 5,Engineering,Development,Internal,10000
+Engineering Cost 6,Engineering,Development,Internal,10000
+Engineering Cost 7,Engineering,Development,Internal,10000
+Engineering Cost 8,Engineering,Development,Internal,10000
+Engineering Cost 9,Engineering,Development,Internal,10000
+Engineering Cost 10,Engineering,Development,Internal,10000
+Engineering Cost 11,Engineering,Development,Internal,10000
+Engineering Cost 12,Engineering,Development,Internal,10000
+Engineering Cost 13,Engineering,Development,Internal,10000
+Engineering Cost 14,Engineering,Development,Internal,10000
+Engineering Cost 15,Engineering,Development,Internal,10000
+Other Dept Cost 1,Marketing,Ads,Internal,2000
+Other Dept Cost 2,Sales,Commissions,Internal,1500
+Other Dept Cost 3,HR,Salaries,Internal,3000
+Other Dept Cost 4,Finance,Fees,Internal,1000
+Other Dept Cost 5,Operations,Supplies,Internal,800

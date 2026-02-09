@@ -1,0 +1,15 @@
+Description,Department,Category,Vendor,Amount
+Software Development Team,Engineering,Development,Internal,80000
+Cloud Infrastructure (AWS),Infrastructure,Hosting,Amazon AWS,15000
+Marketing & Customer Acquisition,Growth,Marketing,Google/FB Ads,30000
+Office Space (WeWork),Operations,Facilities,WeWork,12000
+Salaries - Engineering,Engineering,Salaries,Internal,120000
+Salaries - Sales,Sales,Salaries,Internal,80000
+Salaries - Marketing,Marketing,Salaries,Internal,50000
+"Software Tools (Slack, Notion, etc.)",Operations,Software,Various,5000
+Legal & Accounting Services,Administrative,Professional Services,Law Firm & CPA,15000
+Travel & Conferences,Business Dev,Travel,Various,10000
+Employee Benefits,HR,Benefits,Benefits Co,25000
+"Hardware (Laptops, Servers)",IT,Hardware,Apple/Dell,30000
+Customer Support Tools,Customer Success,Software,Zendesk,8000
+Research & Development,R&D,Research,Internal,20000
