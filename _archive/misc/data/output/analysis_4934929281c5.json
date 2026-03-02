@@ -1,0 +1,138 @@
+{
+  "filename": "sample_budget_medium.csv",
+  "total_budget": 218960.0,
+  "risk_analysis": {
+    "overall_risk_score": 49.335495067592255,
+    "risk_level": "Medium",
+    "total_budget": 218960.0,
+    "risk_categories": {
+      "weather_dependent": {
+        "count": 3,
+        "amount": 9250.0,
+        "percentage": 4.224515893313847,
+        "description": "Items affected by weather conditions"
+      },
+      "talent_related": {
+        "count": 1,
+        "amount": 5900.0,
+        "percentage": 2.6945560833028863,
+        "description": "Risks related to talent/cast availability and costs"
+      },
+      "special_equipment": {
+        "count": 6,
+        "amount": 22800.0,
+        "percentage": 10.41286079649251,
+        "description": "Specialized or expensive equipment"
+      },
+      "location_risks": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Risks related to filming locations"
+      },
+      "schedule_sensitive": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Items with tight scheduling constraints"
+      },
+      "vfx_heavy": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Visual effects intensive elements"
+      },
+      "stunts_action": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Stunt and action sequences"
+      },
+      "regulatory_compliance": {
+        "count": 4,
+        "amount": 11100.0,
+        "percentage": 5.0694190719766175,
+        "description": "Regulatory and compliance issues"
+      },
+      "high_cost": {
+        "count": 1,
+        "amount": 14300.0,
+        "percentage": 6.530873218852759,
+        "description": "High cost items"
+      }
+    },
+    "high_risk_items": [
+      {
+        "description": "Billboard rental - Marketing",
+        "department": "Marketing",
+        "amount": 14300.0,
+        "percentage": 6.530873218852759,
+        "notes": ""
+      },
+      {
+        "description": "Billboard rental - Marketing",
+        "department": "Marketing",
+        "amount": 14300.0,
+        "percentage": 6.530873218852759,
+        "notes": ""
+      },
+      {
+        "description": "Contractor payment - Human Resources",
+        "department": "Human Resources",
+        "amount": 5900.0,
+        "percentage": 2.6945560833028863,
+        "notes": ""
+      },
+      {
+        "description": "Legal expense - Finance",
+        "department": "Finance",
+        "amount": 5100.0,
+        "percentage": 2.329192546583851,
+        "notes": ""
+      },
+      {
+        "description": "Training expense - Human Resources",
+        "department": "Human Resources",
+        "amount": 4700.0,
+        "percentage": 2.146510778224333,
+        "notes": ""
+      },
+      {
+        "description": "Training expense - Human Resources",
+        "department": "Human Resources",
+        "amount": 3700.0,
+        "percentage": 1.6898063573255389,
+        "notes": ""
+      },
+      {
+        "description": "Audio equipment - Production",
+        "department": "Production",
+        "amount": 3700.0,
+        "percentage": 1.6898063573255389,
+        "notes": ""
+      },
+      {
+        "description": "Legal expense - Finance",
+        "department": "Finance",
+        "amount": 2800.0,
+        "percentage": 1.278772378516624,
+        "notes": ""
+      },
+      {
+        "description": "Car rental - Sales",
+        "department": "Sales",
+        "amount": 2100.0,
+        "percentage": 0.9590792838874681,
+        "notes": ""
+      },
+      {
+        "description": "Studio Rental expense - Creative",
+        "department": "Creative",
+        "amount": 2000.0,
+        "percentage": 0.9134088417975886,
+        "notes": ""
+      }
+    ],
+    "timestamp": "2025-11-09T09:02:35.318760"
+  }
+}

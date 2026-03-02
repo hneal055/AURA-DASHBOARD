@@ -1,0 +1,138 @@
+{
+  "filename": "sample_budget_location.xlsx",
+  "total_budget": 227726.0,
+  "risk_analysis": {
+    "overall_risk_score": 100.0,
+    "risk_level": "Critical",
+    "total_budget": 227726.0,
+    "risk_categories": {
+      "weather_dependent": {
+        "count": 5,
+        "amount": 86704.0,
+        "percentage": 38.07382556229855,
+        "description": "Items affected by weather conditions"
+      },
+      "talent_related": {
+        "count": 1,
+        "amount": 54882.0,
+        "percentage": 24.100014930223164,
+        "description": "Risks related to talent/cast availability and costs"
+      },
+      "special_equipment": {
+        "count": 1,
+        "amount": 13590.0,
+        "percentage": 5.967698023062804,
+        "description": "Specialized or expensive equipment"
+      },
+      "location_risks": {
+        "count": 6,
+        "amount": 121362.0,
+        "percentage": 53.292992455846054,
+        "description": "Risks related to filming locations"
+      },
+      "schedule_sensitive": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Items with tight scheduling constraints"
+      },
+      "vfx_heavy": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Visual effects intensive elements"
+      },
+      "stunts_action": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Stunt and action sequences"
+      },
+      "regulatory_compliance": {
+        "count": 1,
+        "amount": 24977.0,
+        "percentage": 10.968005410010276,
+        "description": "Regulatory and compliance issues"
+      },
+      "high_cost": {
+        "count": 8,
+        "amount": 217445.0,
+        "percentage": 95.48536399005823,
+        "description": "High cost items"
+      }
+    },
+    "high_risk_items": [
+      {
+        "description": "Cast",
+        "department": "Cast",
+        "amount": 54882.0,
+        "percentage": 24.100014930223164,
+        "notes": "Principal cast"
+      },
+      {
+        "description": "Cast",
+        "department": "Cast",
+        "amount": 54882.0,
+        "percentage": 24.100014930223164,
+        "notes": "Principal cast"
+      },
+      {
+        "description": "Travel & Accommodation",
+        "department": "Transportation",
+        "amount": 41434.0,
+        "percentage": 18.194672545076102,
+        "notes": "Crew travel and hotels"
+      },
+      {
+        "description": "Travel & Accommodation",
+        "department": "Transportation",
+        "amount": 41434.0,
+        "percentage": 18.194672545076102,
+        "notes": "Crew travel and hotels"
+      },
+      {
+        "description": "Local Crew Hires",
+        "department": "Production",
+        "amount": 31116.0,
+        "percentage": 13.66378893933938,
+        "notes": "Local production crew"
+      },
+      {
+        "description": "International Location Permits",
+        "department": "Locations",
+        "amount": 24977.0,
+        "percentage": 10.968005410010276,
+        "notes": "Foreign permits and fees"
+      },
+      {
+        "description": "International Location Permits",
+        "department": "Locations",
+        "amount": 24977.0,
+        "percentage": 10.968005410010276,
+        "notes": "Foreign permits and fees"
+      },
+      {
+        "description": "International Location Permits",
+        "department": "Locations",
+        "amount": 24977.0,
+        "percentage": 10.968005410010276,
+        "notes": "Foreign permits and fees"
+      },
+      {
+        "description": "International Location Permits",
+        "department": "Locations",
+        "amount": 24977.0,
+        "percentage": 10.968005410010276,
+        "notes": "Foreign permits and fees"
+      },
+      {
+        "description": "Weather Contingency",
+        "department": "Production",
+        "amount": 20366.0,
+        "percentage": 8.943203674591395,
+        "notes": "Weather delays for outdoor shoots"
+      }
+    ],
+    "timestamp": "2025-11-06T01:14:18.340092"
+  }
+}

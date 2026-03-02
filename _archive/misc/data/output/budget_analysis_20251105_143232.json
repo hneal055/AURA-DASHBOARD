@@ -1,0 +1,185 @@
+{
+  "timestamp": "2025-11-05T14:32:32.036865",
+  "budget_summary": {
+    "total_budget": 237500.0,
+    "line_items": 14,
+    "risk_score": 21.66315789473684,
+    "risk_level": "Moderate",
+    "departments": 9
+  },
+  "departments": {
+    "Art": {
+      "amount": 18000.0,
+      "percentage": 7.578947368421053,
+      "item_count": 1
+    },
+    "Camera": {
+      "amount": 15000.0,
+      "percentage": 6.315789473684211,
+      "item_count": 1
+    },
+    "Cast": {
+      "amount": 70000.0,
+      "percentage": 29.47368421052631,
+      "item_count": 2
+    },
+    "Lighting": {
+      "amount": 8500.0,
+      "percentage": 3.578947368421052,
+      "item_count": 1
+    },
+    "Locations": {
+      "amount": 5000.0,
+      "percentage": 2.1052631578947367,
+      "item_count": 1
+    },
+    "Post-Production": {
+      "amount": 34000.0,
+      "percentage": 14.315789473684209,
+      "item_count": 2
+    },
+    "Production": {
+      "amount": 70500.0,
+      "percentage": 29.68421052631579,
+      "item_count": 4
+    },
+    "Transportation": {
+      "amount": 7500.0,
+      "percentage": 3.1578947368421053,
+      "item_count": 1
+    },
+    "Wardrobe": {
+      "amount": 9000.0,
+      "percentage": 3.7894736842105265,
+      "item_count": 1
+    }
+  },
+  "risk_categories": {
+    "weather_dependent": {
+      "items": 1,
+      "amount": 5000.0,
+      "percentage": 2.1052631578947367,
+      "details": [
+        {
+          "description": "Location Permits",
+          "amount": 5000.0,
+          "percentage": 2.1052631578947367
+        }
+      ]
+    },
+    "talent_related": {
+      "items": 2,
+      "amount": 70000.0,
+      "percentage": 29.47368421052631,
+      "details": [
+        {
+          "description": "Cast - Lead Actor",
+          "amount": 45000.0,
+          "percentage": 18.947368421052634
+        },
+        {
+          "description": "Cast - Supporting Roles",
+          "amount": 25000.0,
+          "percentage": 10.526315789473683
+        }
+      ]
+    },
+    "special_equipment": {
+      "items": 1,
+      "amount": 15000.0,
+      "percentage": 6.315789473684211,
+      "details": [
+        {
+          "description": "Camera Equipment Rental",
+          "amount": 15000.0,
+          "percentage": 6.315789473684211
+        }
+      ]
+    },
+    "location_risks": {
+      "items": 1,
+      "amount": 5000.0,
+      "percentage": 2.1052631578947367,
+      "details": [
+        {
+          "description": "Location Permits",
+          "amount": 5000.0,
+          "percentage": 2.1052631578947367
+        }
+      ]
+    },
+    "vfx_heavy": {
+      "items": 3,
+      "amount": 42500.0,
+      "percentage": 17.894736842105264,
+      "details": [
+        {
+          "description": "Lighting Package",
+          "amount": 8500.0,
+          "percentage": 3.578947368421052
+        },
+        {
+          "description": "Post-Production Sound",
+          "amount": 12000.0,
+          "percentage": 5.052631578947368
+        },
+        {
+          "description": "Visual Effects",
+          "amount": 22000.0,
+          "percentage": 9.263157894736842
+        }
+      ]
+    }
+  },
+  "visualizations": {
+    "department_pie": "data/output\\department_breakdown.png",
+    "top_items_bar": "data/output\\top_items.png"
+  },
+  "high_cost_items": [
+    {
+      "description": "Camera Equipment Rental",
+      "amount": 15000.0,
+      "percentage": 6.315789473684211
+    },
+    {
+      "description": "Cast - Lead Actor",
+      "amount": 45000.0,
+      "percentage": 18.947368421052634
+    },
+    {
+      "description": "Cast - Supporting Roles",
+      "amount": 25000.0,
+      "percentage": 10.526315789473683
+    },
+    {
+      "description": "Director Fee",
+      "amount": 30000.0,
+      "percentage": 12.631578947368421
+    },
+    {
+      "description": "Catering",
+      "amount": 12000.0,
+      "percentage": 5.052631578947368
+    },
+    {
+      "description": "Production Design",
+      "amount": 18000.0,
+      "percentage": 7.578947368421053
+    },
+    {
+      "description": "Post-Production Sound",
+      "amount": 12000.0,
+      "percentage": 5.052631578947368
+    },
+    {
+      "description": "Visual Effects",
+      "amount": 22000.0,
+      "percentage": 9.263157894736842
+    },
+    {
+      "description": "Contingency",
+      "amount": 20000.0,
+      "percentage": 8.421052631578947
+    }
+  ]
+}

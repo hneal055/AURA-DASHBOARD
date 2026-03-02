@@ -1,0 +1,138 @@
+{
+  "filename": "sample_budget_small.csv",
+  "total_budget": 88760.0,
+  "risk_analysis": {
+    "overall_risk_score": 100.0,
+    "risk_level": "Critical",
+    "total_budget": 88760.0,
+    "risk_categories": {
+      "weather_dependent": {
+        "count": 4,
+        "amount": 23000.0,
+        "percentage": 25.91257323118522,
+        "description": "Items affected by weather conditions"
+      },
+      "talent_related": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Risks related to talent/cast availability and costs"
+      },
+      "special_equipment": {
+        "count": 2,
+        "amount": 8400.0,
+        "percentage": 9.46372239747634,
+        "description": "Specialized or expensive equipment"
+      },
+      "location_risks": {
+        "count": 2,
+        "amount": 17100.0,
+        "percentage": 19.265434880576837,
+        "description": "Risks related to filming locations"
+      },
+      "schedule_sensitive": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Items with tight scheduling constraints"
+      },
+      "vfx_heavy": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Visual effects intensive elements"
+      },
+      "stunts_action": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Stunt and action sequences"
+      },
+      "regulatory_compliance": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Regulatory and compliance issues"
+      },
+      "high_cost": {
+        "count": 4,
+        "amount": 36200.0,
+        "percentage": 40.78413699864804,
+        "description": "High cost items"
+      }
+    },
+    "high_risk_items": [
+      {
+        "description": "TV commercial - Marketing",
+        "department": "Marketing",
+        "amount": 14600.0,
+        "percentage": 16.448850833708878,
+        "notes": ""
+      },
+      {
+        "description": "Location scouting - Production",
+        "department": "Production",
+        "amount": 12100.0,
+        "percentage": 13.632266786840919,
+        "notes": ""
+      },
+      {
+        "description": "Location scouting - Production",
+        "department": "Production",
+        "amount": 12100.0,
+        "percentage": 13.632266786840919,
+        "notes": ""
+      },
+      {
+        "description": "Location scouting - Production",
+        "department": "Production",
+        "amount": 12100.0,
+        "percentage": 13.632266786840919,
+        "notes": ""
+      },
+      {
+        "description": "Location rental - Production",
+        "department": "Production",
+        "amount": 5000.0,
+        "percentage": 5.633168093735917,
+        "notes": ""
+      },
+      {
+        "description": "Location rental - Production",
+        "department": "Production",
+        "amount": 5000.0,
+        "percentage": 5.633168093735917,
+        "notes": ""
+      },
+      {
+        "description": "Location rental - Production",
+        "department": "Production",
+        "amount": 5000.0,
+        "percentage": 5.633168093735917,
+        "notes": ""
+      },
+      {
+        "description": "Location rental - Production",
+        "department": "Production",
+        "amount": 5000.0,
+        "percentage": 5.633168093735917,
+        "notes": ""
+      },
+      {
+        "description": "Events expense - Marketing",
+        "department": "Marketing",
+        "amount": 4500.0,
+        "percentage": 5.069851284362326,
+        "notes": ""
+      },
+      {
+        "description": "Training expense - Human Resources",
+        "department": "Human Resources",
+        "amount": 4400.0,
+        "percentage": 4.9571879224876065,
+        "notes": ""
+      }
+    ],
+    "timestamp": "2025-11-09T09:06:29.402823"
+  }
+}

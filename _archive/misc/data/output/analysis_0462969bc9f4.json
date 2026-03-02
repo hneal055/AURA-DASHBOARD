@@ -1,0 +1,138 @@
+{
+  "filename": "sample_budget_standard.xlsx",
+  "total_budget": 468783.0,
+  "risk_analysis": {
+    "overall_risk_score": 100.0,
+    "risk_level": "Critical",
+    "total_budget": 468783.0,
+    "risk_categories": {
+      "weather_dependent": {
+        "count": 4,
+        "amount": 25082.0,
+        "percentage": 5.350449994987019,
+        "description": "Items affected by weather conditions"
+      },
+      "talent_related": {
+        "count": 5,
+        "amount": 95351.0,
+        "percentage": 20.340114722590197,
+        "description": "Risks related to talent/cast availability and costs"
+      },
+      "special_equipment": {
+        "count": 9,
+        "amount": 62447.0,
+        "percentage": 13.32108886201078,
+        "description": "Specialized or expensive equipment"
+      },
+      "location_risks": {
+        "count": 3,
+        "amount": 16971.0,
+        "percentage": 3.620225136150415,
+        "description": "Risks related to filming locations"
+      },
+      "schedule_sensitive": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Items with tight scheduling constraints"
+      },
+      "vfx_heavy": {
+        "count": 6,
+        "amount": 69600.0,
+        "percentage": 14.846954774383883,
+        "description": "Visual effects intensive elements"
+      },
+      "stunts_action": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Stunt and action sequences"
+      },
+      "regulatory_compliance": {
+        "count": 2,
+        "amount": 13175.0,
+        "percentage": 2.8104688096624666,
+        "description": "Regulatory and compliance issues"
+      },
+      "high_cost": {
+        "count": 4,
+        "amount": 116397.0,
+        "percentage": 24.829611995315528,
+        "description": "High cost items"
+      }
+    },
+    "high_risk_items": [
+      {
+        "description": "Lead Actor",
+        "department": "Cast",
+        "amount": 41367.0,
+        "percentage": 8.824338766550834,
+        "notes": "5-week shoot, principal talent"
+      },
+      {
+        "description": "Lead Actor",
+        "department": "Cast",
+        "amount": 41367.0,
+        "percentage": 8.824338766550834,
+        "notes": "5-week shoot, principal talent"
+      },
+      {
+        "description": "Director Fee",
+        "department": "Production",
+        "amount": 27512.0,
+        "percentage": 5.8688135021961125,
+        "notes": "Flat fee"
+      },
+      {
+        "description": "Producer Fee",
+        "department": "Production",
+        "amount": 23873.0,
+        "percentage": 5.092548151276817,
+        "notes": "Executive producer"
+      },
+      {
+        "description": "Contingency",
+        "department": "Production",
+        "amount": 23645.0,
+        "percentage": 5.043911575291766,
+        "notes": "10% contingency fund"
+      },
+      {
+        "description": "Supporting Actor 1",
+        "department": "Cast",
+        "amount": 17443.0,
+        "percentage": 3.7209113811720993,
+        "notes": "3-week shoot"
+      },
+      {
+        "description": "Editor",
+        "department": "Post-Production",
+        "amount": 17358.0,
+        "percentage": 3.7027793243355664,
+        "notes": "8 weeks of editing"
+      },
+      {
+        "description": "Visual Effects",
+        "department": "Post-Production",
+        "amount": 16364.0,
+        "percentage": 3.490740918506004,
+        "notes": "VFX shots"
+      },
+      {
+        "description": "Supporting Actor 2",
+        "department": "Cast",
+        "amount": 16254.0,
+        "percentage": 3.467275903776374,
+        "notes": "3-week shoot"
+      },
+      {
+        "description": "Camera Package Rental",
+        "department": "Camera",
+        "amount": 13692.0,
+        "percentage": 2.920754378891726,
+        "notes": "RED camera with lenses"
+      }
+    ],
+    "timestamp": "2025-11-06T21:16:30.480359"
+  }
+}

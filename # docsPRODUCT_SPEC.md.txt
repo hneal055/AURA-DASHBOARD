@@ -1,6 +1,0 @@
-# docs/PRODUCT_SPEC.md
-- User personas (Screenwriter, Director)
-- Feature priorities by user type
-- Success metrics
-- MVP scope vs. future enhancements
-

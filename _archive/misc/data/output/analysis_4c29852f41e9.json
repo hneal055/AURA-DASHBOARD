@@ -1,0 +1,138 @@
+{
+  "filename": "sample_tech_startup.csv",
+  "total_budget": 566200.0,
+  "risk_analysis": {
+    "overall_risk_score": 78.0904274108089,
+    "risk_level": "Critical",
+    "total_budget": 566200.0,
+    "risk_categories": {
+      "weather_dependent": {
+        "count": 2,
+        "amount": 9000.0,
+        "percentage": 1.5895443306252206,
+        "description": "Items affected by weather conditions"
+      },
+      "talent_related": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Risks related to talent/cast availability and costs"
+      },
+      "special_equipment": {
+        "count": 5,
+        "amount": 34600.0,
+        "percentage": 6.1109148710702925,
+        "description": "Specialized or expensive equipment"
+      },
+      "location_risks": {
+        "count": 1,
+        "amount": 24900.0,
+        "percentage": 4.397739314729778,
+        "description": "Risks related to filming locations"
+      },
+      "schedule_sensitive": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Items with tight scheduling constraints"
+      },
+      "vfx_heavy": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Visual effects intensive elements"
+      },
+      "stunts_action": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Stunt and action sequences"
+      },
+      "regulatory_compliance": {
+        "count": 4,
+        "amount": 37930.0,
+        "percentage": 6.699046273401625,
+        "description": "Regulatory and compliance issues"
+      },
+      "high_cost": {
+        "count": 3,
+        "amount": 241900.0,
+        "percentage": 42.72341928647121,
+        "description": "High cost items"
+      }
+    },
+    "high_risk_items": [
+      {
+        "description": "Monthly payroll - Human Resources",
+        "department": "Human Resources",
+        "amount": 122900.0,
+        "percentage": 21.706110914871072,
+        "notes": ""
+      },
+      {
+        "description": "Executive compensation - Human Resources",
+        "department": "Human Resources",
+        "amount": 72200.0,
+        "percentage": 12.751677852348994,
+        "notes": ""
+      },
+      {
+        "description": "Consultant fees - Production",
+        "department": "Production",
+        "amount": 46800.0,
+        "percentage": 8.265630519251149,
+        "notes": ""
+      },
+      {
+        "description": "Permit fees - Production",
+        "department": "Production",
+        "amount": 24900.0,
+        "percentage": 4.397739314729778,
+        "notes": ""
+      },
+      {
+        "description": "Permit fees - Production",
+        "department": "Production",
+        "amount": 24900.0,
+        "percentage": 4.397739314729778,
+        "notes": ""
+      },
+      {
+        "description": "Audio equipment - Production",
+        "department": "Production",
+        "amount": 14300.0,
+        "percentage": 2.5256093253267395,
+        "notes": ""
+      },
+      {
+        "description": "Audio equipment - Production",
+        "department": "Production",
+        "amount": 8500.0,
+        "percentage": 1.501236312257153,
+        "notes": ""
+      },
+      {
+        "description": "Insurance expense - Operations",
+        "department": "Operations",
+        "amount": 7200.0,
+        "percentage": 1.2716354645001766,
+        "notes": ""
+      },
+      {
+        "description": "Studio Rental expense - Creative",
+        "department": "Creative",
+        "amount": 6700.0,
+        "percentage": 1.1833274461321088,
+        "notes": ""
+      },
+      {
+        "description": "Training expense - Human Resources",
+        "department": "Human Resources",
+        "amount": 5700.0,
+        "percentage": 1.006711409395973,
+        "notes": ""
+      }
+    ],
+    "timestamp": "2025-11-09T09:04:09.437971"
+  }
+}

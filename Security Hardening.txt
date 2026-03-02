@@ -1,5 +1,0 @@
-# Missing security features:
-- SSL/TLS encryption (HTTPS)
-- User authentication
-- Security headers
-- Vulnerability scanning

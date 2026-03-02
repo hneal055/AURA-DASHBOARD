@@ -1,1 +1,16 @@
-c
+production-parser/
+├── 🚀 web_app.py                 # NEW - Flask web application
+├── 📁 templates/                 # NEW - Web templates
+│   ├── base.html                # Base template
+│   ├── index.html               # Dashboard
+│   ├── analyze.html             # Single analysis
+│   ├── batch.html               # Batch processing
+│   ├── 404.html                 # Error pages
+│   └── 500.html                 # Error pages
+├── 🎯 USER_GUIDE.md              # User documentation
+├── 🔧 problem_analysis.py        # Step 1: Workflow analysis
+├── ⚙️ aura_setup.py             # Step 2: API setup
+├── 🧠 aura_processor.py         # Step 3: Core engine
+├── 📊 screenflow_dashboard.py   # Step 4: Dashboard
+├── 🚀 enhanced_processor.py     # Advanced features
+└── 📋 requirements.txt          # Dependencies

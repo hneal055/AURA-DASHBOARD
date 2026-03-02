@@ -1,0 +1,106 @@
+{
+  "report_generated": "2025-11-05T13:50:48.306576",
+  "budget_file": "sample_budget.xlsx",
+  "total_budget": 237500.0,
+  "line_items": 14,
+  "departments": {
+    "Art": {
+      "amount": 18000.0,
+      "percentage": 7.578947368421053
+    },
+    "Camera": {
+      "amount": 15000.0,
+      "percentage": 6.315789473684211
+    },
+    "Cast": {
+      "amount": 70000.0,
+      "percentage": 29.47368421052631
+    },
+    "Lighting": {
+      "amount": 8500.0,
+      "percentage": 3.578947368421052
+    },
+    "Locations": {
+      "amount": 5000.0,
+      "percentage": 2.1052631578947367
+    },
+    "Post-Production": {
+      "amount": 34000.0,
+      "percentage": 14.315789473684209
+    },
+    "Production": {
+      "amount": 70500.0,
+      "percentage": 29.68421052631579
+    },
+    "Transportation": {
+      "amount": 7500.0,
+      "percentage": 3.1578947368421053
+    },
+    "Wardrobe": {
+      "amount": 9000.0,
+      "percentage": 3.7894736842105265
+    }
+  },
+  "top_items": [
+    {
+      "description": "Cast - Lead Actor",
+      "department": "Cast",
+      "amount": 45000.0,
+      "percentage": 18.947368421052634
+    },
+    {
+      "description": "Director Fee",
+      "department": "Production",
+      "amount": 30000.0,
+      "percentage": 12.631578947368421
+    },
+    {
+      "description": "Cast - Supporting Roles",
+      "department": "Cast",
+      "amount": 25000.0,
+      "percentage": 10.526315789473683
+    },
+    {
+      "description": "Visual Effects",
+      "department": "Post-Production",
+      "amount": 22000.0,
+      "percentage": 9.263157894736842
+    },
+    {
+      "description": "Contingency",
+      "department": "Production",
+      "amount": 20000.0,
+      "percentage": 8.421052631578947
+    },
+    {
+      "description": "Production Design",
+      "department": "Art",
+      "amount": 18000.0,
+      "percentage": 7.578947368421053
+    },
+    {
+      "description": "Camera Equipment Rental",
+      "department": "Camera",
+      "amount": 15000.0,
+      "percentage": 6.315789473684211
+    },
+    {
+      "description": "Catering",
+      "department": "Production",
+      "amount": 12000.0,
+      "percentage": 5.052631578947368
+    },
+    {
+      "description": "Post-Production Sound",
+      "department": "Post-Production",
+      "amount": 12000.0,
+      "percentage": 5.052631578947368
+    },
+    {
+      "description": "Costumes",
+      "department": "Wardrobe",
+      "amount": 9000.0,
+      "percentage": 3.7894736842105265
+    }
+  ]
+}

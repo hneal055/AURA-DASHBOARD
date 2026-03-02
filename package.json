@@ -1,8 +1,0 @@
-{
-  "name": "aura-enterprise-dashboard",
-  "version": "2.3.1",
-  "description": "AI-Powered Screenplay Analysis Platform",
-  "scripts": {
-    "dev": "python -m http.server 8080"
-  }
-}

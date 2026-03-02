@@ -1,0 +1,138 @@
+{
+  "filename": "sample_film_production.csv",
+  "total_budget": 1001770.0,
+  "risk_analysis": {
+    "overall_risk_score": 61.063717220519685,
+    "risk_level": "High",
+    "total_budget": 1001770.0,
+    "risk_categories": {
+      "weather_dependent": {
+        "count": 4,
+        "amount": 46300.0,
+        "percentage": 4.621819379697935,
+        "description": "Items affected by weather conditions"
+      },
+      "talent_related": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Risks related to talent/cast availability and costs"
+      },
+      "special_equipment": {
+        "count": 7,
+        "amount": 59160.0,
+        "percentage": 5.905547181488765,
+        "description": "Specialized or expensive equipment"
+      },
+      "location_risks": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Risks related to filming locations"
+      },
+      "schedule_sensitive": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Items with tight scheduling constraints"
+      },
+      "vfx_heavy": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Visual effects intensive elements"
+      },
+      "stunts_action": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Stunt and action sequences"
+      },
+      "regulatory_compliance": {
+        "count": 2,
+        "amount": 23800.0,
+        "percentage": 2.375794843127664,
+        "description": "Regulatory and compliance issues"
+      },
+      "high_cost": {
+        "count": 3,
+        "amount": 351400.0,
+        "percentage": 35.077912095590804,
+        "description": "High cost items"
+      }
+    },
+    "high_risk_items": [
+      {
+        "description": "Monthly payroll - Human Resources",
+        "department": "Human Resources",
+        "amount": 239500.0,
+        "percentage": 23.907683400381323,
+        "notes": ""
+      },
+      {
+        "description": "TV commercial - Marketing",
+        "department": "Marketing",
+        "amount": 58000.0,
+        "percentage": 5.7897521387144755,
+        "notes": ""
+      },
+      {
+        "description": "Facebook ads - Marketing",
+        "department": "Marketing",
+        "amount": 53900.0,
+        "percentage": 5.380476556495004,
+        "notes": ""
+      },
+      {
+        "description": "Studio gear - Production",
+        "department": "Production",
+        "amount": 21800.0,
+        "percentage": 2.176148217654751,
+        "notes": ""
+      },
+      {
+        "description": "Training expense - Human Resources",
+        "department": "Human Resources",
+        "amount": 18100.0,
+        "percentage": 1.8068019605298622,
+        "notes": ""
+      },
+      {
+        "description": "Insurance expense - Operations",
+        "department": "Operations",
+        "amount": 17700.0,
+        "percentage": 1.7668726354352797,
+        "notes": ""
+      },
+      {
+        "description": "Training expense - Human Resources",
+        "department": "Human Resources",
+        "amount": 15600.0,
+        "percentage": 1.557243678688721,
+        "notes": ""
+      },
+      {
+        "description": "Studio Rental expense - Creative",
+        "department": "Creative",
+        "amount": 14000.0,
+        "percentage": 1.3975263783103906,
+        "notes": ""
+      },
+      {
+        "description": "Studio gear - Production",
+        "department": "Production",
+        "amount": 8700.0,
+        "percentage": 0.8684628208071712,
+        "notes": ""
+      },
+      {
+        "description": "Car rental - Sales",
+        "department": "Sales",
+        "amount": 8600.0,
+        "percentage": 0.8584804895335257,
+        "notes": ""
+      }
+    ],
+    "timestamp": "2025-11-09T09:08:37.480490"
+  }
+}

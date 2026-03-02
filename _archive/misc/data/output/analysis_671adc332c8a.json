@@ -1,0 +1,138 @@
+{
+  "filename": "f763381ed4d8_sample_budget_action.xlsx",
+  "total_budget": 450954.0,
+  "risk_analysis": {
+    "overall_risk_score": 100.0,
+    "risk_level": "Critical",
+    "total_budget": 450954.0,
+    "risk_categories": {
+      "weather_dependent": {
+        "count": 2,
+        "amount": 60867.0,
+        "percentage": 13.497385542649583,
+        "description": "Items affected by weather conditions"
+      },
+      "talent_related": {
+        "count": 3,
+        "amount": 156602.0,
+        "percentage": 34.72682357845812,
+        "description": "Risks related to talent/cast availability and costs"
+      },
+      "special_equipment": {
+        "count": 4,
+        "amount": 78161.0,
+        "percentage": 17.33236649414353,
+        "description": "Specialized or expensive equipment"
+      },
+      "location_risks": {
+        "count": 1,
+        "amount": 13878.0,
+        "percentage": 3.0774757514070172,
+        "description": "Risks related to filming locations"
+      },
+      "schedule_sensitive": {
+        "count": 0,
+        "amount": 0,
+        "percentage": 0,
+        "description": "Items with tight scheduling constraints"
+      },
+      "vfx_heavy": {
+        "count": 2,
+        "amount": 61051.0,
+        "percentage": 13.538187930476278,
+        "description": "Visual effects intensive elements"
+      },
+      "stunts_action": {
+        "count": 13,
+        "amount": 354179.0,
+        "percentage": 78.53993977212752,
+        "description": "Stunt and action sequences"
+      },
+      "regulatory_compliance": {
+        "count": 2,
+        "amount": 37697.0,
+        "percentage": 8.359389205994402,
+        "description": "Regulatory and compliance issues"
+      },
+      "high_cost": {
+        "count": 9,
+        "amount": 349146.0,
+        "percentage": 77.42386141380274,
+        "description": "High cost items"
+      }
+    },
+    "high_risk_items": [
+      {
+        "description": "Lead Action Star",
+        "department": "Cast",
+        "amount": 78532.0,
+        "percentage": 17.41463652612018,
+        "notes": "A-list talent for stunts"
+      },
+      {
+        "description": "Lead Action Star",
+        "department": "Cast",
+        "amount": 78532.0,
+        "percentage": 17.41463652612018,
+        "notes": "A-list talent for stunts"
+      },
+      {
+        "description": "Lead Action Star",
+        "department": "Cast",
+        "amount": 78532.0,
+        "percentage": 17.41463652612018,
+        "notes": "A-list talent for stunts"
+      },
+      {
+        "description": "Post-Production VFX Heavy",
+        "department": "Post-Production",
+        "amount": 46989.0,
+        "percentage": 10.419909791242565,
+        "notes": "Extensive visual effects"
+      },
+      {
+        "description": "Post-Production VFX Heavy",
+        "department": "Post-Production",
+        "amount": 46989.0,
+        "percentage": 10.419909791242565,
+        "notes": "Extensive visual effects"
+      },
+      {
+        "description": "Post-Production VFX Heavy",
+        "department": "Post-Production",
+        "amount": 46989.0,
+        "percentage": 10.419909791242565,
+        "notes": "Extensive visual effects"
+      },
+      {
+        "description": "Director",
+        "department": "Production",
+        "amount": 41273.0,
+        "percentage": 9.152374743321936,
+        "notes": "Action director"
+      },
+      {
+        "description": "Director",
+        "department": "Production",
+        "amount": 41273.0,
+        "percentage": 9.152374743321936,
+        "notes": "Action director"
+      },
+      {
+        "description": "Stunt Performers",
+        "department": "Stunts",
+        "amount": 40458.0,
+        "percentage": 8.9716467755026,
+        "notes": "Multiple stunt doubles and performers"
+      },
+      {
+        "description": "Stunt Performers",
+        "department": "Stunts",
+        "amount": 40458.0,
+        "percentage": 8.9716467755026,
+        "notes": "Multiple stunt doubles and performers"
+      }
+    ],
+    "timestamp": "2025-11-06T21:28:27.348958"
+  }
+}
