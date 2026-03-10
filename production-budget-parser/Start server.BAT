@@ -60,14 +60,15 @@ echo Press CTRL+C to stop the server
 echo ================================================================
 echo.
 
-REM Use gunicorn if available (production WSGI server), else Flask dev server
-%PYTHON% -c "import gunicorn" >nul 2>&1
+REM Use waitress if available (Windows-compatible production WSGI server)
+REM gunicorn does NOT work on Windows (requires Unix fork())
+%PYTHON% -c "import waitress" >nul 2>&1
 if not errorlevel 1 (
-    echo [92mStarting with gunicorn ^(production WSGI server^)...[0m
+    echo [92mStarting with waitress ^(production WSGI server^)...[0m
     echo.
-    venv\Scripts\gunicorn.exe -w 2 -b 127.0.0.1:8082 --timeout 120 web_app:app
+    %PYTHON% -m waitress --host=127.0.0.1 --port=8082 --threads=4 web_app:app
 ) else (
-    echo [93mStarting with Flask dev server ^(install gunicorn for production^)...[0m
+    echo [93mStarting with Flask dev server ^(run: pip install waitress for production^)...[0m
     echo.
     %PYTHON% web_app.py
 )
