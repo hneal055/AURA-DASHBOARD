@@ -1,0 +1,77 @@
+VENDOR TECHNOLOGY NON-DISCLOSURE AGREEMENT
+
+This Vendor Technology Non-Disclosure Agreement ("Agreement") is entered into as of July 10, 2025, between:
+
+COMPANY: StreamCore Analytics Inc., a California corporation ("Company")
+VENDOR: DataBridge Solutions LLC, a Texas LLC ("Vendor")
+
+1. PURPOSE
+Company is evaluating Vendor's cloud-based data analytics platform ("Platform") for potential integration into Company's production management systems. The parties may exchange technical and business information in connection with this evaluation and any resulting implementation.
+
+2. MUTUAL CONFIDENTIALITY
+Both parties recognize that each may disclose Confidential Information to the other. For purposes of this Agreement:
+
+"Company Confidential Information" includes: production data, content metadata, client information, workflow specifications, integration requirements, and technical architecture details.
+
+"Vendor Confidential Information" includes: Platform source code, algorithms, API documentation, pricing and discount structures, product roadmaps, and customer lists.
+
+Each party ("Receiving Party") agrees to protect the other party's ("Disclosing Party") Confidential Information as set forth herein.
+
+3. STANDARD OF CARE
+Each Receiving Party shall:
+(a) Protect Confidential Information using at least the same care it uses for its own confidential information of comparable sensitivity, but no less than reasonable care;
+(b) Limit access to those employees and contractors with a genuine need to know;
+(c) Not disclose Confidential Information to any third party without prior written consent;
+(d) Use Confidential Information solely to evaluate and implement the Platform.
+
+4. STANDARD EXCEPTIONS
+Obligations under this Agreement do not apply to information that:
+(a) Is or becomes publicly available through no fault of the Receiving Party;
+(b) Was already known to the Receiving Party prior to disclosure, as documented in written records predating this Agreement;
+(c) Is independently developed by the Receiving Party without use of or reference to the Disclosing Party's Confidential Information;
+(d) Is rightfully received from a third party without restriction on disclosure;
+(e) Is disclosed pursuant to applicable law, provided the Receiving Party gives reasonable advance notice to the Disclosing Party.
+
+5. TECHNICAL DATA SECURITY
+Each party shall implement and maintain reasonable technical and organizational security measures to protect Confidential Information, including:
+- Encrypted storage and transmission
+- Role-based access controls
+- Audit logging for access to sensitive data
+
+Vendor shall notify Company within 48 hours of discovering any security incident affecting Company Confidential Information.
+
+6. TERM
+This Agreement shall remain in effect for 2 years from the Effective Date, unless extended by mutual written agreement. Obligations of confidentiality shall survive termination for an additional 2 years (4 years total). Obligations with respect to source code and proprietary algorithms shall survive indefinitely.
+
+7. RETURN OF DATA
+Upon expiration or termination of this Agreement, each party shall return or securely destroy the other party's Confidential Information within 30 days and provide written certification of destruction upon request. Each party may retain one archival copy in secured legal files.
+
+8. OPEN SOURCE
+Vendor represents that its Platform does not incorporate any open-source components with license terms that would require Company to disclose or open-source Company's proprietary code or data as a result of integration.
+
+9. LIMITATION OF LIABILITY
+NEITHER PARTY SHALL BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, PUNITIVE, OR CONSEQUENTIAL DAMAGES ARISING OUT OF THIS AGREEMENT. EACH PARTY'S AGGREGATE LIABILITY FOR BREACH OF THIS AGREEMENT SHALL NOT EXCEED $250,000 OR THE TOTAL FEES PAID BY COMPANY IN THE 12 MONTHS PRECEDING THE BREACH, WHICHEVER IS GREATER.
+
+10. INJUNCTIVE RELIEF
+Notwithstanding Section 9, each party shall be entitled to seek injunctive or other equitable relief for threatened or actual breach of this Agreement, without the requirement to post bond.
+
+11. GOVERNING LAW
+This Agreement shall be governed by the laws of the State of California, without regard to its conflict of law provisions.
+
+12. DISPUTE RESOLUTION
+Any dispute shall be resolved by binding arbitration in San Francisco, California, under JAMS Comprehensive Arbitration Rules. Each party shall bear its own costs; the arbitrator may award attorneys' fees only for claims found to be frivolous.
+
+13. ENTIRE AGREEMENT
+This Agreement, together with any applicable order forms or statements of work, constitutes the entire agreement between the parties regarding confidentiality and supersedes all prior oral or written discussions.
+
+STREAMCORE ANALYTICS INC.:
+By: _______________________
+Name: Yusuf A. Brennan
+Title: CTO
+Date: ____________________
+
+DATABRIDGE SOLUTIONS LLC:
+By: _______________________
+Name: Gretchen P. Hollins
+Title: VP, Enterprise Sales
+Date: ____________________

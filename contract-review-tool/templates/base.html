@@ -45,6 +45,9 @@
                     <a href="/batch" class="hover:text-blue-200 transition duration-200 {% if request.path == '/batch' %}font-bold border-b-2 border-white{% endif %}">
                         <i class="fas fa-layer-group mr-2"></i>Batch
                     </a>
+                    <a href="/contract" class="hover:text-blue-200 transition duration-200 {% if request.path in ['/contract', '/results'] %}font-bold border-b-2 border-white{% endif %}">
+                        <i class="fas fa-file-contract mr-2"></i>Contract Review
+                    </a>
                 </div>
             </div>
         </div>

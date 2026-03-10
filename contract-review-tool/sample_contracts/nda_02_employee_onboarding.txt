@@ -1,0 +1,73 @@
+EMPLOYEE CONFIDENTIALITY AND NON-DISCLOSURE AGREEMENT
+
+This Employee Confidentiality and Non-Disclosure Agreement ("Agreement") is entered into as of the employee's start date, between:
+
+EMPLOYER: Nexus Creative Studios Inc., a California corporation ("Company")
+EMPLOYEE: _________________________ ("Employee")
+
+This Agreement is a condition of employment and must be signed before Employee's first day of work.
+
+1. CONFIDENTIAL INFORMATION DEFINED
+"Confidential Information" includes all non-public information relating to Company's business, including:
+- Client lists, contact information, and project details
+- Pricing, contracts, and financial terms with clients or vendors
+- Unreleased creative content, scripts, concepts, and pitches
+- Software, tools, workflows, and proprietary processes
+- Personnel information, compensation data, and HR matters
+- Business strategies, development pipelines, and partnership discussions
+- Any information received from third parties under confidentiality obligations
+
+2. EMPLOYEE OBLIGATIONS DURING EMPLOYMENT
+Employee shall:
+(a) Use Confidential Information solely to perform job duties;
+(b) Not disclose Confidential Information to any person, including family members, without written authorization;
+(c) Take all reasonable precautions to prevent unauthorized access;
+(d) Immediately report any suspected or actual breach to the HR department;
+(e) Not remove any Confidential Information from Company premises or systems without authorization.
+
+3. OBLIGATIONS AFTER EMPLOYMENT
+For 3 years following separation from employment, for any reason, Employee shall continue to hold all Confidential Information in confidence and shall not use or disclose it. Trade secrets shall be protected indefinitely.
+
+4. COMPANY PROPERTY
+All documents, files, emails, notes, recordings, and materials — whether physical or digital — created or received in connection with Employee's work belong exclusively to Company. Upon separation, Employee shall immediately return all Company property and shall not retain any copies.
+
+5. PERMITTED DISCLOSURES
+Nothing in this Agreement prohibits Employee from:
+(a) Reporting violations of law to governmental agencies (NLRB, EEOC, SEC, etc.);
+(b) Discussing wages, hours, or working conditions with coworkers as protected by the National Labor Relations Act;
+(c) Disclosing information pursuant to a valid court order, provided Employee gives Company advance notice where legally permitted.
+
+6. SOCIAL MEDIA AND PUBLIC STATEMENTS
+Employee shall not post, publish, or share information about Company projects, clients, or internal matters on social media or any public platform without prior written approval from Company's Communications department. This includes behind-the-scenes content, work-in-progress materials, and client identities.
+
+7. WHISTLEBLOWER PROTECTION
+Pursuant to the Defend Trade Secrets Act (18 U.S.C. § 1833(b)), Employee is notified that Employee may disclose trade secrets in confidence to a federal, state, or local government official or to an attorney for the purpose of reporting a suspected violation of law, and shall not be liable under this Agreement for such disclosure.
+
+8. REMEDIES
+Employee agrees that breach would cause irreparable harm entitling Company to injunctive relief. Company may also pursue monetary damages and recover attorneys' fees in any successful enforcement action.
+
+9. AT-WILL STATUS
+This Agreement does not alter Employee's at-will employment status. Either party may terminate employment at any time with or without cause or notice.
+
+10. GOVERNING LAW
+This Agreement shall be governed by the laws of the State of California.
+
+11. SEVERABILITY
+If any provision of this Agreement is found unenforceable, the remaining provisions shall remain in full force and effect.
+
+COMPANY:
+Nexus Creative Studios Inc.
+By: _______________________
+Name: ____________________
+Title: HR Director
+Date: ____________________
+
+EMPLOYEE:
+_______________________
+Signature
+
+_______________________
+Printed Name
+
+_______________________
+Start Date

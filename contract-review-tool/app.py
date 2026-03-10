@@ -216,8 +216,23 @@ def parse_ai_response(response_text):
 
 @app.route('/')
 def index():
-    """Main page"""
+    """Dashboard — redirect to analyze"""
     return render_template('analyze.html')
+
+@app.route('/analyze')
+def analyze():
+    """Analyze page"""
+    return render_template('analyze.html')
+
+@app.route('/batch')
+def batch():
+    """Batch analysis page"""
+    return render_template('batch.html')
+
+@app.route('/contract')
+def contract():
+    """Contract review upload page"""
+    return render_template('contract.html')
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -353,6 +368,111 @@ Return this exact JSON structure:
 def results():
     """Results page"""
     return render_template('results.html')
+
+@app.route('/api/extract-text', methods=['POST'])
+def extract_text():
+    """Extract text from uploaded file without analyzing — used by frontend for PDF/DOCX"""
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file uploaded'}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No file selected'}), 400
+
+    if not allowed_file(file.filename):
+        return jsonify({'error': 'Unsupported file type'}), 400
+
+    try:
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(file_path)
+        text = extract_text_from_file(file_path, filename)
+        os.remove(file_path)
+        return jsonify({'text': text})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/batch/analyze', methods=['POST'])
+def api_batch_analyze():
+    """Batch screenplay analysis — processes multiple screenplays sequentially"""
+    import time
+    data = request.get_json()
+    if not data or not data.get('screenplays'):
+        return jsonify({'success': False, 'error': 'No screenplays provided'}), 400
+
+    api_key = os.environ.get('ANTHROPIC_API_KEY')
+    if not api_key:
+        return jsonify({'success': False, 'error': 'ANTHROPIC_API_KEY not configured'}), 500
+
+    client = anthropic.Anthropic(api_key=api_key)
+    results = []
+
+    for item in data['screenplays']:
+        screenplay_text = item.get('content', '')
+        writer_info = item.get('writer_info', {})
+        filename = item.get('filename', 'Unknown')
+
+        if not screenplay_text.strip():
+            continue
+
+        try:
+            start_time = time.time()
+            writer_context = ''
+            if writer_info.get('name'):
+                writer_context = f"\nWriter: {writer_info['name']} ({writer_info.get('experience', 'unknown')})"
+
+            prompt = f"""You are a professional Hollywood screenplay analyst. Analyze the following screenplay and return ONLY a valid JSON object — no markdown, no explanation, just the JSON.{writer_context}
+
+SCREENPLAY:
+{screenplay_text}
+
+Return this exact JSON structure:
+{{
+  "assessment_id": "{filename}",
+  "quick_verdict": {{
+    "commercial_score": <integer 0-100>,
+    "recommendation": "<one-sentence recommendation>",
+    "priority_level": "<HIGH PRIORITY | MEDIUM PRIORITY | LOW PRIORITY>",
+    "estimated_roi": "<e.g. 2.5x-4x>"
+  }},
+  "technical_metrics": {{
+    "document_metrics": {{
+      "primary_genre": "<genre>",
+      "estimated_pages": <integer>,
+      "character_count": <integer>
+    }},
+    "processing_time": "<X.Xs>"
+  }}
+}}"""
+
+            message = client.messages.create(
+                model="claude-sonnet-4-6",
+                max_tokens=800,
+                messages=[{"role": "user", "content": prompt}]
+            )
+
+            elapsed = round(time.time() - start_time, 1)
+            response_text = message.content[0].text.strip()
+
+            if response_text.startswith('```'):
+                response_text = response_text.split('\n', 1)[1]
+                response_text = response_text.rsplit('```', 1)[0]
+
+            result = json.loads(response_text)
+            result['technical_metrics']['processing_time'] = f"{elapsed}s"
+            results.append(result)
+
+        except Exception as e:
+            results.append({
+                'assessment_id': filename,
+                'error': str(e),
+                'quick_verdict': {'commercial_score': 0, 'recommendation': 'Error during processing', 'priority_level': 'LOW PRIORITY', 'estimated_roi': 'N/A'},
+                'technical_metrics': {'document_metrics': {'primary_genre': 'Unknown', 'estimated_pages': 0, 'character_count': 0}, 'processing_time': '0s'}
+            })
+
+    return jsonify({'success': True, 'results': results})
+
 
 @app.route('/health')
 def health():

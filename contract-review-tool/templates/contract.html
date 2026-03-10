@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Review Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📄 Contract Review Tool</h1>
+            <p class="subtitle">AI-powered analysis of contracts and lease agreements</p>
+        </header>
+
+        <main>
+            <!-- Features -->
+            <div class="features">
+                <h3>What We Analyze</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">📋</span>
+                        <h4>Key Terms</h4>
+                        <p>Parties, duration, payment terms, deliverables, and renewal conditions</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">⚠️</span>
+                        <h4>Risk Analysis</h4>
+                        <p>HIGH / MEDIUM / LOW risk flags with specific clause references</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">⚖️</span>
+                        <h4>Fairness Assessment</h4>
+                        <p>Overall FAVORABLE, NEUTRAL, or UNFAVORABLE verdict with reasoning</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">💡</span>
+                        <h4>Negotiation Points</h4>
+                        <p>Specific language suggestions and leverage points to strengthen your position</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Section -->
+            <div class="upload-section">
+                <h2>Upload Your Contract</h2>
+                <p>Supports PDF, DOCX, DOC, and TXT — up to 16MB</p>
+
+                <div class="file-input-wrapper">
+                    <label class="file-label" for="contractFile">
+                        <span class="file-icon">📁</span>
+                        <span id="fileLabel">Choose File or Drag & Drop</span>
+                    </label>
+                    <input type="file" id="contractFile" accept=".pdf,.docx,.doc,.txt"
+                           onchange="handleFileSelect(this)">
+                </div>
+
+                <div class="file-name" id="fileName"></div>
+
+                <br>
+                <button class="btn-primary" id="analyzeBtn" onclick="analyzeContract()" disabled>
+                    <span class="btn-icon">🔍</span>
+                    Analyze Contract
+                </button>
+
+                <div class="loading" id="loading" style="display:none;">
+                    <div class="spinner"></div>
+                    <p>Analyzing your contract with AI...</p>
+                    <p class="loading-subtext">This typically takes 15–30 seconds</p>
+                </div>
+
+                <div class="error-message" id="errorMessage" style="display:none;"></div>
+            </div>
+
+            <!-- How it works -->
+            <div class="info-section">
+                <h3>How It Works</h3>
+                <ol class="steps">
+                    <li>Upload your contract (PDF, DOCX, or TXT)</li>
+                    <li>Our AI extracts and reads the full document text</li>
+                    <li>Claude analyzes key terms, risks, and fairness</li>
+                    <li>You receive a structured report with actionable insights</li>
+                </ol>
+            </div>
+
+            <div class="security-note">
+                🔒 Your document is processed securely and not stored after analysis
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Scene Reader Studio Technologies LLC. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        let selectedFile = null;
+
+        function handleFileSelect(input) {
+            selectedFile = input.files[0];
+            if (!selectedFile) return;
+
+            document.getElementById('fileName').style.display = 'block';
+            document.getElementById('fileName').textContent = `Selected: ${selectedFile.name}`;
+            document.getElementById('fileLabel').textContent = selectedFile.name;
+            document.getElementById('analyzeBtn').disabled = false;
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        async function analyzeContract() {
+            if (!selectedFile) return;
+
+            document.getElementById('analyzeBtn').disabled = true;
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('contract', selectedFile);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || data.error) {
+                    throw new Error(data.error || 'Analysis failed');
+                }
+
+                sessionStorage.setItem('analysisResults', JSON.stringify(data));
+                window.location.href = '/results';
+
+            } catch (error) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('analyzeBtn').disabled = false;
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('errorMessage').textContent = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

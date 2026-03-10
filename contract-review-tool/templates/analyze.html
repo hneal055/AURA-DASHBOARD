@@ -190,18 +190,36 @@ function analyzer() {
             }
         },
         
-        handleFileUpload(event) {
+        async handleFileUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
-            
-            this.uploadStatus = `Processing: ${file.name}`;
-            
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                this.screenplayContent = e.target.result;
-                this.uploadStatus = `Loaded: ${file.name}`;
-            };
-            reader.readAsText(file);
+
+            this.uploadStatus = `Processing: ${file.name}...`;
+            const ext = file.name.split('.').pop().toLowerCase();
+
+            if (ext === 'pdf' || ext === 'docx' || ext === 'doc') {
+                const formData = new FormData();
+                formData.append('file', file);
+                try {
+                    const response = await fetch('/api/extract-text', { method: 'POST', body: formData });
+                    const data = await response.json();
+                    if (data.text) {
+                        this.screenplayContent = data.text;
+                        this.uploadStatus = `Loaded: ${file.name}`;
+                    } else {
+                        this.uploadStatus = `Error: ${data.error}`;
+                    }
+                } catch (e) {
+                    this.uploadStatus = `Upload failed: ${e.message}`;
+                }
+            } else {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.screenplayContent = e.target.result;
+                    this.uploadStatus = `Loaded: ${file.name}`;
+                };
+                reader.readAsText(file);
+            }
         }
     }
 }

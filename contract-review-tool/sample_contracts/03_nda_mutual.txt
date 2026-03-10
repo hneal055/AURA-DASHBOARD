@@ -1,0 +1,65 @@
+MUTUAL NON-DISCLOSURE AGREEMENT
+
+This Mutual Non-Disclosure Agreement ("Agreement") is entered into as of February 20, 2025, between:
+
+PARTY A: Goldstream Entertainment LLC, a California LLC ("Goldstream")
+PARTY B: TechVision AI Corp., a Delaware corporation ("TechVision")
+
+(Each referred to individually as a "Party" and collectively as the "Parties")
+
+RECITALS
+The Parties wish to explore a potential business collaboration relating to AI-powered content analysis tools for the entertainment industry (the "Purpose"). In connection with this exploration, each Party may disclose confidential information to the other.
+
+1. DEFINITION OF CONFIDENTIAL INFORMATION
+"Confidential Information" means any non-public information disclosed by one Party ("Disclosing Party") to the other ("Receiving Party"), whether oral, written, or electronic, that is designated as confidential or that reasonably should be understood to be confidential given the nature of the information and circumstances of disclosure. Confidential Information includes, without limitation: business plans, financial data, customer lists, pricing, technology, software, algorithms, trade secrets, and product roadmaps.
+
+Confidential Information does NOT include information that:
+(a) is or becomes publicly available through no breach of this Agreement;
+(b) was already known to Receiving Party prior to disclosure, as evidenced by written records;
+(c) is independently developed by Receiving Party without use of Confidential Information; or
+(d) is rightfully received from a third party without restriction.
+
+2. OBLIGATIONS
+2.1 Non-Disclosure. Each Party agrees to: (a) hold the other's Confidential Information in strict confidence; (b) not disclose it to any third party without prior written consent; (c) use it solely for the Purpose; and (d) protect it using at least the same degree of care used to protect its own confidential information, but in no event less than reasonable care.
+
+2.2 Permitted Disclosures. Each Party may disclose Confidential Information to its employees, officers, and contractors who have a need to know for the Purpose, provided such persons are bound by confidentiality obligations no less restrictive than those herein.
+
+2.3 Required Disclosure. If legally compelled to disclose, the Receiving Party shall: (a) promptly notify the Disclosing Party; (b) cooperate with any effort to seek a protective order; and (c) disclose only the minimum amount required.
+
+3. TERM
+This Agreement shall remain in effect for 3 years from the Effective Date. The obligations of confidentiality shall survive termination of this Agreement for an additional 2 years (5 years total from Effective Date) with respect to trade secrets and for 2 years total with respect to all other Confidential Information.
+
+4. RETURN OF INFORMATION
+Upon request or termination, each Party shall promptly return or certifiably destroy all Confidential Information received, including all copies and derivatives.
+
+5. NO LICENSE
+Nothing in this Agreement grants either Party any license, right, title, or interest in the other Party's Confidential Information or intellectual property. No obligation to enter into any further agreement is created herein.
+
+6. REMEDIES
+Each Party acknowledges that breach of this Agreement would cause irreparable harm for which monetary damages would be inadequate. Each Party consents to the entry of injunctive or other equitable relief in connection with any such breach, without the requirement of posting bond or proving actual damages.
+
+7. LIMITATION OF LIABILITY
+NEITHER PARTY SHALL BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES ARISING FROM THIS AGREEMENT, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. EACH PARTY'S TOTAL LIABILITY SHALL NOT EXCEED $50,000.
+
+8. GENERAL PROVISIONS
+8.1 Governing Law. This Agreement shall be governed by the laws of the State of California, without regard to conflict of law principles.
+
+8.2 Entire Agreement. This Agreement constitutes the entire agreement between the Parties regarding its subject matter and supersedes all prior discussions or agreements relating thereto.
+
+8.3 Amendment. This Agreement may only be amended by a written instrument signed by authorized representatives of both Parties.
+
+8.4 Counterparts. This Agreement may be executed in counterparts, including electronic signatures, each of which shall be deemed an original.
+
+IN WITNESS WHEREOF, the Parties have executed this Agreement as of the date first written above.
+
+GOLDSTREAM ENTERTAINMENT LLC:
+By: _______________________
+Name: Marcus J. Webb
+Title: Managing Director
+Date: ____________________
+
+TECHVISION AI CORP.:
+By: _______________________
+Name: Priya Sundaram
+Title: Chief Business Officer
+Date: ____________________

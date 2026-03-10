@@ -4,3 +4,4 @@ pypdf
 python-docx
 werkzeug
 python-dotenv
+gunicorn

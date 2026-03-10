@@ -1,0 +1,63 @@
+UNILATERAL NON-DISCLOSURE AGREEMENT
+
+This Non-Disclosure Agreement ("Agreement") is entered into as of June 1, 2025, between:
+
+DISCLOSING PARTY: Vortex Capital Partners LLC, a Delaware LLC ("Disclosing Party")
+RECEIVING PARTY: Marcus Dellwood, an individual ("Receiving Party")
+
+1. PURPOSE
+Receiving Party is being considered for a potential consulting engagement with Disclosing Party relating to mergers and acquisitions advisory services. In connection with evaluating this engagement, Disclosing Party may share certain confidential information with Receiving Party.
+
+2. CONFIDENTIAL INFORMATION
+"Confidential Information" means ALL information disclosed by Disclosing Party to Receiving Party, in any form, whether or not marked confidential, including but not limited to: financial statements, deal pipelines, target company identities, investment strategies, portfolio company data, investor identities, fund performance data, fee structures, internal communications, and any information that Disclosing Party designates as confidential at any time before, during, or after disclosure.
+
+Receiving Party agrees that any information shared during any conversation, meeting, or communication with any representative of Disclosing Party, regardless of context, shall be deemed Confidential Information.
+
+3. OBLIGATIONS
+Receiving Party shall:
+(a) Hold all Confidential Information in strict confidence;
+(b) Not disclose any Confidential Information to any person or entity without prior written consent from an officer of Disclosing Party;
+(c) Not use Confidential Information for any purpose other than evaluating the proposed engagement;
+(d) Promptly notify Disclosing Party of any unauthorized disclosure or suspected breach;
+(e) Not copy, reproduce, or summarize any Confidential Information without express written permission;
+(f) Not discuss the existence of this Agreement or the potential engagement with any third party.
+
+4. NO EXCEPTIONS
+Receiving Party acknowledges that the standard exceptions to confidentiality (public domain, prior knowledge, independent development) shall NOT apply to any information that relates to specific transactions, deal targets, or investor identities, regardless of whether such information becomes publicly known through other means.
+
+5. TERM
+This Agreement shall remain in effect PERMANENTLY and without expiration. Receiving Party's obligations shall continue indefinitely following any termination of discussions or engagement between the parties.
+
+6. RETURN OF INFORMATION
+Upon demand by Disclosing Party, Receiving Party shall immediately return or destroy all Confidential Information and certify such destruction in writing within 24 hours. Disclosing Party may make such demand at any time for any reason.
+
+7. NON-SOLICITATION
+For a period of 5 years following any discussions between the parties, Receiving Party shall not solicit, approach, or engage any investor, portfolio company, target company, employee, or service provider of Disclosing Party that Receiving Party learned of through any interaction with Disclosing Party.
+
+8. REMEDIES AND ENFORCEMENT
+Receiving Party acknowledges that any breach would cause irreparable harm and that Disclosing Party shall be entitled to:
+(a) Immediate injunctive relief without bond or proof of damages;
+(b) Liquidated damages of $500,000 per breach (each unauthorized disclosure constituting a separate breach);
+(c) All attorneys' fees and costs incurred in enforcement;
+(d) Any other remedies available at law or equity.
+
+9. NO ENGAGEMENT OBLIGATION
+Nothing herein obligates Disclosing Party to enter into any agreement, share any information, or proceed with any transaction or engagement with Receiving Party.
+
+10. GOVERNING LAW AND JURISDICTION
+This Agreement shall be governed by the laws of the State of Delaware. Receiving Party irrevocably consents to the exclusive jurisdiction of the state and federal courts of New Castle County, Delaware, and waives any objection to venue.
+
+11. ENTIRE AGREEMENT
+This Agreement may be modified only by a written instrument signed by an authorized officer of Disclosing Party. No modification by Receiving Party alone shall be effective.
+
+DISCLOSING PARTY:
+Vortex Capital Partners LLC
+By: _______________________
+Name: Elliot R. Braxton
+Title: Managing Partner
+Date: ____________________
+
+RECEIVING PARTY:
+_______________________
+Marcus Dellwood
+Date: ____________________

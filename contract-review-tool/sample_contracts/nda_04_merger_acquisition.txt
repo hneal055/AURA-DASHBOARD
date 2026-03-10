@@ -1,0 +1,71 @@
+CONFIDENTIALITY AGREEMENT
+(Merger & Acquisition Due Diligence)
+
+This Confidentiality Agreement ("Agreement") is entered into as of April 28, 2025, between:
+
+DISCLOSING PARTY: Brightline Media Holdings Inc., a Delaware corporation ("Target")
+RECEIVING PARTY: Crestwood Acquisition Group LLC, a Delaware LLC ("Prospective Buyer")
+
+RECITALS
+Target and Prospective Buyer are exploring a potential acquisition of Target by Prospective Buyer or an affiliate (the "Proposed Transaction"). In connection with due diligence, Target may disclose certain confidential and proprietary information to Prospective Buyer.
+
+1. CONFIDENTIAL INFORMATION
+"Confidential Information" means all information disclosed by Target to Prospective Buyer or its Representatives in connection with the Proposed Transaction, in any form, including:
+- Financial statements, projections, and management accounts
+- Customer contracts, vendor agreements, and licensing deals
+- Employee data, compensation, and organizational structure
+- Intellectual property, technology, and product roadmaps
+- Litigation history and legal exposures
+- Strategic plans and market analysis
+- The existence and terms of this Agreement and the Proposed Transaction
+
+2. PERMITTED RECIPIENTS ("Representatives")
+Prospective Buyer may share Confidential Information only with its directors, officers, employees, legal counsel, financial advisors, and lenders who: (a) need to know the information for evaluating the Proposed Transaction; and (b) are bound by confidentiality obligations no less restrictive than those herein. Prospective Buyer shall be responsible for any breach by its Representatives.
+
+3. USE RESTRICTIONS
+Prospective Buyer shall use Confidential Information solely to evaluate the Proposed Transaction and for no other purpose. Prospective Buyer shall not use Confidential Information to compete with Target or to solicit Target's customers or employees.
+
+4. STANDSTILL
+For 12 months from the date of this Agreement, Prospective Buyer shall not, without Target's prior written consent:
+(a) Acquire or seek to acquire any securities or assets of Target outside the Proposed Transaction;
+(b) Make any public announcement regarding the Proposed Transaction;
+(c) Approach any Target employee regarding employment outside the normal course.
+
+5. NON-SOLICITATION
+For 18 months from the date of this Agreement, Prospective Buyer shall not directly solicit for employment any senior manager or key employee of Target identified in the due diligence process. General public job postings shall not violate this provision.
+
+6. RETURN OR DESTRUCTION
+If the Proposed Transaction is not consummated, Prospective Buyer shall, upon Target's request, promptly (within 10 business days) return or certifiably destroy all Confidential Information, including all copies, notes, and analyses incorporating Confidential Information. Prospective Buyer's legal counsel may retain one archival copy subject to ongoing confidentiality.
+
+7. TERM
+The obligations of this Agreement shall remain in effect for 3 years from the date hereof, except that obligations with respect to trade secrets shall continue indefinitely.
+
+8. REQUIRED DISCLOSURE
+If Prospective Buyer is required by law, regulation, or court order to disclose any Confidential Information, Prospective Buyer shall: (a) provide Target with prompt prior written notice; (b) cooperate with Target in seeking a protective order or other relief; and (c) disclose only the minimum information legally required.
+
+9. NO REPRESENTATION
+Target makes no representation or warranty, express or implied, as to the accuracy or completeness of the Confidential Information. Target shall have no liability for Prospective Buyer's reliance thereon.
+
+10. NO OBLIGATION
+This Agreement does not obligate either party to proceed with the Proposed Transaction. Either party may terminate discussions at any time without liability.
+
+11. REMEDIES
+The parties acknowledge that money damages would be an inadequate remedy for breach and that each party shall be entitled to seek injunctive relief and specific performance in addition to all other available remedies. The prevailing party in any enforcement action shall be entitled to recover reasonable attorneys' fees.
+
+12. GOVERNING LAW
+This Agreement shall be governed by the laws of the State of Delaware. The parties consent to the exclusive jurisdiction of the Court of Chancery of the State of Delaware.
+
+13. ENTIRE AGREEMENT
+This Agreement constitutes the entire agreement between the parties regarding confidentiality in connection with the Proposed Transaction and supersedes all prior discussions or agreements on this subject.
+
+BRIGHTLINE MEDIA HOLDINGS INC. (Target):
+By: _______________________
+Name: Carolyn M. Hartley
+Title: Chief Executive Officer
+Date: ____________________
+
+CRESTWOOD ACQUISITION GROUP LLC (Prospective Buyer):
+By: _______________________
+Name: Derek J. Fontaine
+Title: Managing Director
+Date: ____________________
