@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis History — AURA Enterprise{% endblock %}
+
+{% block content %}
+<div class="mb-8">
+    <h2 class="text-3xl font-bold text-gray-800">Analysis History</h2>
+    <p class="text-gray-500 mt-1">All previously analyzed contracts, newest first.</p>
+</div>
+
+{% if records %}
+<div class="bg-white rounded-2xl shadow overflow-hidden">
+    <table class="w-full text-sm">
+        <thead class="bg-gray-50 border-b border-gray-200">
+            <tr>
+                <th class="px-6 py-4 text-left font-semibold text-gray-600">#</th>
+                <th class="px-6 py-4 text-left font-semibold text-gray-600">File</th>
+                <th class="px-6 py-4 text-left font-semibold text-gray-600">Analyzed At</th>
+                <th class="px-6 py-4 text-left font-semibold text-gray-600">Fairness</th>
+                <th class="px-6 py-4 text-left font-semibold text-gray-600">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+            {% for r in records %}
+            <tr class="hover:bg-gray-50 transition">
+                <td class="px-6 py-4 text-gray-400">{{ r.id }}</td>
+                <td class="px-6 py-4 font-medium text-gray-800">
+                    <i class="fas fa-file-alt text-indigo-400 mr-2"></i>{{ r.filename }}
+                </td>
+                <td class="px-6 py-4 text-gray-500">{{ r.analyzed_at }}</td>
+                <td class="px-6 py-4">
+                    {% if r.fairness == 'FAVORABLE' %}
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        <i class="fas fa-check-circle mr-1"></i> Favorable
+                    </span>
+                    {% elif r.fairness == 'UNFAVORABLE' %}
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                        <i class="fas fa-exclamation-circle mr-1"></i> Unfavorable
+                    </span>
+                    {% else %}
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                        <i class="fas fa-minus-circle mr-1"></i> Neutral
+                    </span>
+                    {% endif %}
+                </td>
+                <td class="px-6 py-4">
+                    <button
+                        onclick="loadAndView({{ r.id }})"
+                        class="text-indigo-600 hover:text-indigo-800 font-medium transition"
+                    >
+                        <i class="fas fa-eye mr-1"></i> View
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="bg-white rounded-2xl shadow p-16 text-center text-gray-400">
+    <i class="fas fa-inbox text-5xl mb-4 block"></i>
+    <p class="text-lg font-medium">No analyses yet.</p>
+    <p class="text-sm mt-1">Upload a contract on the <a href="/contract" class="text-indigo-500 hover:underline">Contract Review</a> page to get started.</p>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+async function loadAndView(id) {
+    try {
+        const resp = await fetch(`/api/history/${id}`);
+        if (!resp.ok) throw new Error('Failed to load');
+        const data = await resp.json();
+        sessionStorage.setItem('contractAnalysis', JSON.stringify(data));
+        window.location.href = '/results';
+    } catch (e) {
+        alert('Could not load analysis: ' + e.message);
+    }
+}
+</script>
+{% endblock %}

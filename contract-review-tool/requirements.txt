@@ -1,4 +1,5 @@
 flask
+flask-sqlalchemy
 anthropic
 pypdf
 python-docx

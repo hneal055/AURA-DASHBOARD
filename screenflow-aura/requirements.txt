@@ -1,2 +1,6 @@
 flask
-requests
+flask-sqlalchemy
+anthropic
+python-dotenv
+gunicorn
+pytest

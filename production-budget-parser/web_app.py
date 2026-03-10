@@ -6,7 +6,7 @@ Enhanced with PATH A Features: Interactive Charts, Modern UI, Excel Export
 ================================================================================
 """
 
-from flask import Flask, request, render_template_string, redirect, url_for, send_file, flash
+from flask import Flask, request, render_template_string, redirect, url_for, send_file, flash, jsonify
 import pandas as pd
 import os
 import json
@@ -14,8 +14,12 @@ import uuid
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
+import anthropic
 
-load_dotenv()
+load_dotenv(override=True)
+
+# API key auth for protected endpoints
+from flask_auth import require_api_key
 
 # Import database
 from database_models import db, BudgetAnalysis, BudgetLineItem, BudgetComparison, get_recent_analyses
@@ -61,6 +65,14 @@ os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 # Create database tables
 with app.app_context():
     db.create_all()
+    # Add ai_insights_json column to existing databases (idempotent)
+    try:
+        from sqlalchemy import text
+        with db.engine.connect() as conn:
+            conn.execute(text('ALTER TABLE budget_analyses ADD COLUMN ai_insights_json TEXT'))
+            conn.commit()
+    except Exception:
+        pass  # Column already exists
 
 
 def allowed_file(filename):
@@ -868,6 +880,82 @@ def compare_budgets_route(file_id):
         db.session.rollback()
         flash(f'Error comparing budgets: {str(e)}', 'error')
         return redirect(url_for('compare_page', file_id=file_id))
+
+
+@app.route('/api/ai-insights/<file_id>', methods=['POST'])
+@require_api_key
+def ai_insights(file_id):
+    """
+    Generate AI-powered narrative insights for a budget analysis.
+    Protected by API key: pass X-API-Key header (see api_keys.json / BUDGET_API_KEY in .env).
+    """
+    analysis = BudgetAnalysis.query.get(file_id)
+    if not analysis:
+        return jsonify({'error': 'Analysis not found'}), 404
+
+    # Return cached insights if already generated
+    if analysis.ai_insights_json:
+        return jsonify({'success': True, 'insights': json.loads(analysis.ai_insights_json), 'cached': True})
+
+    api_key = os.environ.get('ANTHROPIC_API_KEY')
+    if not api_key:
+        return jsonify({'error': 'ANTHROPIC_API_KEY not configured'}), 500
+
+    try:
+        risk_data = json.loads(analysis.risk_analysis_json or '{}')
+        optimizations = json.loads(analysis.optimizations_json or '[]')
+
+        prompt = f"""You are a senior film/TV production financial analyst. Review the following budget analysis and provide concise, actionable executive insights.
+
+BUDGET SUMMARY:
+- File: {analysis.filename}
+- Total Budget: ${analysis.total_budget:,.2f}
+- Line Items: {analysis.line_items}
+- Departments: {analysis.num_departments}
+- Risk Level: {analysis.risk_level} (score: {analysis.risk_score:.2f})
+- Analyzed: {analysis.analysis_timestamp.strftime('%Y-%m-%d')}
+
+RISK FLAGS:
+{json.dumps(risk_data.get('items_by_category', {}), indent=2)[:2000]}
+
+OPTIMIZATION OPPORTUNITIES:
+{json.dumps(optimizations, indent=2)[:1000]}
+
+Return ONLY a valid JSON object with this structure:
+{{
+  "executive_summary": "<2-3 sentence overview of the budget health>",
+  "key_concerns": ["<concern 1>", "<concern 2>", "<concern 3>"],
+  "top_recommendations": [
+    {{"action": "<what to do>", "rationale": "<why>", "priority": "<HIGH|MEDIUM|LOW>"}},
+    {{"action": "<what to do>", "rationale": "<why>", "priority": "<HIGH|MEDIUM|LOW>"}},
+    {{"action": "<what to do>", "rationale": "<why>", "priority": "<HIGH|MEDIUM|LOW>"}}
+  ],
+  "budget_health_score": <integer 0-100>,
+  "outlook": "<POSITIVE|CAUTIONARY|CRITICAL>"
+}}"""
+
+        client = anthropic.Anthropic(api_key=api_key)
+        message = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=1000,
+            messages=[{"role": "user", "content": prompt}]
+        )
+
+        response_text = message.content[0].text.strip()
+        if response_text.startswith('```'):
+            response_text = response_text.split('\n', 1)[1]
+            response_text = response_text.rsplit('```', 1)[0]
+
+        insights = json.loads(response_text)
+
+        # Cache in database
+        analysis.ai_insights_json = json.dumps(insights)
+        db.session.commit()
+
+        return jsonify({'success': True, 'insights': insights, 'cached': False})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

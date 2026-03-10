@@ -3,10 +3,13 @@ Contract Review Tool - AI-Powered Contract Analysis
 Copyright (c) 2024. All rights reserved.
 """
 
-from flask import Flask, render_template, request, jsonify, send_file
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session
+from flask_sqlalchemy import SQLAlchemy
 import os
 import json
+import hmac
 from datetime import datetime
+from functools import wraps
 import anthropic
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
@@ -32,17 +35,97 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'uploads')
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
+# Secret key — required for sessions
+_secret_key = os.environ.get('SECRET_KEY')
+if not _secret_key:
+    raise RuntimeError('SECRET_KEY is not set. Add it to your .env file.')
+app.secret_key = _secret_key
+
+# SQLite database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///history.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
 # Allowed file extensions
 ALLOWED_EXTENSIONS = {'pdf', 'txt', 'docx', 'doc'}
+
+
+# ---------------------------------------------------------------------------
+# Database model
+# ---------------------------------------------------------------------------
+
+class AnalysisHistory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(256), nullable=False)
+    analyzed_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    fairness = db.Column(db.String(32), nullable=False, default='NEUTRAL')
+    results_json = db.Column(db.Text, nullable=False)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'filename': self.filename,
+            'analyzed_at': self.analyzed_at.strftime('%Y-%m-%d %H:%M:%S'),
+            'fairness': self.fairness,
+        }
+
+
+with app.app_context():
+    db.create_all()
+
+
+# ---------------------------------------------------------------------------
+# Auth helpers
+# ---------------------------------------------------------------------------
+
+def login_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get('logged_in'):
+            return redirect(url_for('login', next=request.path))
+        return f(*args, **kwargs)
+    return decorated
+
+
+def check_password(candidate: str) -> bool:
+    app_password = os.environ.get('APP_PASSWORD', '')
+    return hmac.compare_digest(candidate.encode(), app_password.encode())
+
+
+# ---------------------------------------------------------------------------
+# Auth routes
+# ---------------------------------------------------------------------------
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        password = request.form.get('password', '')
+        if check_password(password):
+            session['logged_in'] = True
+            next_url = request.args.get('next') or '/'
+            return redirect(next_url)
+        error = 'Incorrect password. Please try again.'
+    return render_template('login.html', error=error)
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
+
+# ---------------------------------------------------------------------------
+# File helpers
+# ---------------------------------------------------------------------------
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 def extract_text_from_pdf(file_path):
-    """Extract text from PDF file"""
     if not PYPDF_AVAILABLE:
         return "PDF processing not available. Please install pypdf."
-    
     try:
         text = ""
         with open(file_path, 'rb') as file:
@@ -53,11 +136,10 @@ def extract_text_from_pdf(file_path):
     except Exception as e:
         return f"Error extracting PDF text: {str(e)}"
 
+
 def extract_text_from_docx(file_path):
-    """Extract text from DOCX file"""
     if not DOCX_AVAILABLE:
         return "DOCX processing not available. Please install python-docx."
-    
     try:
         doc = docx.Document(file_path)
         text = "\n".join([paragraph.text for paragraph in doc.paragraphs])
@@ -65,10 +147,9 @@ def extract_text_from_docx(file_path):
     except Exception as e:
         return f"Error extracting DOCX text: {str(e)}"
 
+
 def extract_text_from_file(file_path, filename):
-    """Extract text from uploaded file based on extension"""
     extension = filename.rsplit('.', 1)[1].lower()
-    
     if extension == 'pdf':
         return extract_text_from_pdf(file_path)
     elif extension in ['docx', 'doc']:
@@ -82,19 +163,19 @@ def extract_text_from_file(file_path, filename):
     else:
         return "Unsupported file format"
 
+
+# ---------------------------------------------------------------------------
+# AI analysis
+# ---------------------------------------------------------------------------
+
 def analyze_contract_with_ai(contract_text):
-    """Send contract to Claude API for analysis"""
-    
-    # Get API key from environment
     api_key = os.environ.get('ANTHROPIC_API_KEY')
     if not api_key:
-        return {
-            'error': 'API key not configured. Please set ANTHROPIC_API_KEY environment variable.'
-        }
-    
+        return {'error': 'API key not configured. Please set ANTHROPIC_API_KEY environment variable.'}
+
     try:
         client = anthropic.Anthropic(api_key=api_key)
-        
+
         prompt = f"""You are an expert contract analyst. Analyze the following contract and provide a comprehensive review.
 
 CONTRACT TEXT:
@@ -132,45 +213,35 @@ Be specific, quote relevant clauses, and provide actionable insights."""
         message = client.messages.create(
             model="claude-sonnet-4-6",
             max_tokens=4000,
-            messages=[
-                {"role": "user", "content": prompt}
-            ]
+            messages=[{"role": "user", "content": prompt}]
         )
-        
+
         response_text = message.content[0].text
-        
-        # Parse the response into structured data
         analysis = parse_ai_response(response_text)
         analysis['raw_response'] = response_text
-        
         return analysis
-        
+
     except Exception as e:
-        return {
-            'error': f'Error analyzing contract: {str(e)}'
-        }
+        return {'error': f'Error analyzing contract: {str(e)}'}
+
 
 def parse_ai_response(response_text):
-    """Parse Claude's response into structured data"""
-    
     sections = {
         'key_terms': [],
         'risks': [],
         'fairness': 'NEUTRAL',
         'negotiation_points': []
     }
-    
-    # Simple parsing - split by sections
+
     lines = response_text.split('\n')
     current_section = None
     current_item = []
-    
+
     for line in lines:
         line = line.strip()
         if not line:
             continue
-            
-        # Detect section headers
+
         if 'KEY TERMS' in line.upper():
             current_section = 'key_terms'
         elif 'RISK ANALYSIS' in line.upper():
@@ -180,9 +251,7 @@ def parse_ai_response(response_text):
         elif 'NEGOTIATION' in line.upper():
             current_section = 'negotiation_points'
         elif line.startswith('-') or line.startswith('•'):
-            # This is a bullet point
             if current_item:
-                # Save previous item
                 if current_section == 'key_terms':
                     sections['key_terms'].append(' '.join(current_item))
                 elif current_section == 'risks':
@@ -193,8 +262,7 @@ def parse_ai_response(response_text):
         else:
             if current_item:
                 current_item.append(line)
-    
-    # Don't forget the last item
+
     if current_item:
         if current_section == 'key_terms':
             sections['key_terms'].append(' '.join(current_item))
@@ -202,8 +270,7 @@ def parse_ai_response(response_text):
             sections['risks'].append(' '.join(current_item))
         elif current_section == 'negotiation_points':
             sections['negotiation_points'].append(' '.join(current_item))
-    
-    # Extract fairness rating
+
     for line in lines:
         if 'FAVORABLE' in line.upper():
             sections['fairness'] = 'FAVORABLE'
@@ -211,77 +278,107 @@ def parse_ai_response(response_text):
         elif 'UNFAVORABLE' in line.upper():
             sections['fairness'] = 'UNFAVORABLE'
             break
-    
+
     return sections
 
+
+# ---------------------------------------------------------------------------
+# Page routes (login-protected)
+# ---------------------------------------------------------------------------
+
 @app.route('/')
+@login_required
 def index():
-    """Dashboard — redirect to analyze"""
     return render_template('analyze.html')
+
 
 @app.route('/analyze')
+@login_required
 def analyze():
-    """Analyze page"""
     return render_template('analyze.html')
 
+
 @app.route('/batch')
+@login_required
 def batch():
-    """Batch analysis page"""
     return render_template('batch.html')
 
+
 @app.route('/contract')
+@login_required
 def contract():
-    """Contract review upload page"""
     return render_template('contract.html')
 
+
+@app.route('/results')
+@login_required
+def results():
+    return render_template('results.html')
+
+
+@app.route('/history')
+@login_required
+def history():
+    records = AnalysisHistory.query.order_by(AnalysisHistory.analyzed_at.desc()).all()
+    return render_template('history.html', records=records)
+
+
+# ---------------------------------------------------------------------------
+# API endpoints (login-protected)
+# ---------------------------------------------------------------------------
+
 @app.route('/upload', methods=['POST'])
+@login_required
 def upload_file():
-    """Handle file upload and analysis"""
-    
     if 'contract' not in request.files:
         return jsonify({'error': 'No file uploaded'}), 400
-    
+
     file = request.files['contract']
-    
+
     if file.filename == '':
         return jsonify({'error': 'No file selected'}), 400
-    
+
     if not allowed_file(file.filename):
         return jsonify({'error': 'File type not allowed. Please upload PDF, DOCX, or TXT'}), 400
-    
+
     try:
-        # Save file temporarily
         filename = secure_filename(file.filename)
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(file_path)
-        
-        # Extract text
+
         contract_text = extract_text_from_file(file_path, filename)
-        
-        # Clean up file
         os.remove(file_path)
-        
+
         if not contract_text or len(contract_text.strip()) < 100:
-            return jsonify({'error': 'Could not extract enough text from the file. Please ensure it contains a readable contract.'}), 400
-        
-        # Analyze with AI
+            return jsonify({'error': 'Could not extract enough text from the file.'}), 400
+
         analysis = analyze_contract_with_ai(contract_text)
-        
+
         if 'error' in analysis:
             return jsonify({'error': analysis['error']}), 500
-        
-        # Add metadata
+
         analysis['filename'] = filename
         analysis['analyzed_at'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        
+
+        # Persist to database
+        record = AnalysisHistory(
+            filename=filename,
+            fairness=analysis.get('fairness', 'NEUTRAL'),
+            results_json=json.dumps(analysis)
+        )
+        db.session.add(record)
+        db.session.commit()
+        analysis['history_id'] = record.id
+
         return jsonify(analysis)
-        
+
     except Exception as e:
         return jsonify({'error': f'Error processing file: {str(e)}'}), 500
 
+
 @app.route('/api/analyze', methods=['POST'])
+@login_required
 def api_analyze():
-    """JSON endpoint for screenplay analysis"""
     import time
     data = request.get_json()
     if not data or not data.get('screenplay'):
@@ -348,7 +445,6 @@ Return this exact JSON structure:
         elapsed = round(time.time() - start_time, 1)
         response_text = message.content[0].text.strip()
 
-        # Strip markdown code fences if present
         if response_text.startswith('```'):
             response_text = response_text.split('\n', 1)[1]
             response_text = response_text.rsplit('```', 1)[0]
@@ -364,14 +460,9 @@ Return this exact JSON structure:
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
-@app.route('/results')
-def results():
-    """Results page"""
-    return render_template('results.html')
-
 @app.route('/api/extract-text', methods=['POST'])
+@login_required
 def extract_text():
-    """Extract text from uploaded file without analyzing — used by frontend for PDF/DOCX"""
     if 'file' not in request.files:
         return jsonify({'error': 'No file uploaded'}), 400
 
@@ -394,8 +485,8 @@ def extract_text():
 
 
 @app.route('/api/batch/analyze', methods=['POST'])
+@login_required
 def api_batch_analyze():
-    """Batch screenplay analysis — processes multiple screenplays sequentially"""
     import time
     data = request.get_json()
     if not data or not data.get('screenplays'):
@@ -474,9 +565,16 @@ Return this exact JSON structure:
     return jsonify({'success': True, 'results': results})
 
 
+@app.route('/api/history/<int:record_id>')
+@login_required
+def api_history_detail(record_id):
+    record = AnalysisHistory.query.get_or_404(record_id)
+    data = json.loads(record.results_json)
+    return jsonify(data)
+
+
 @app.route('/health')
 def health():
-    """Health check endpoint"""
     return jsonify({
         'status': 'healthy',
         'timestamp': datetime.now().isoformat(),
@@ -484,10 +582,10 @@ def health():
         'docx_available': DOCX_AVAILABLE
     })
 
+
 if __name__ == '__main__':
-    # Check for API key
     if not os.environ.get('ANTHROPIC_API_KEY'):
         print("WARNING: ANTHROPIC_API_KEY environment variable not set!")
         print("Set it with: export ANTHROPIC_API_KEY='your-api-key'")
-    
+
     app.run(debug=True, host='0.0.0.0', port=5001)

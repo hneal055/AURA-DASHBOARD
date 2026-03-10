@@ -35,6 +35,7 @@ class BudgetAnalysis(db.Model):
     dataframe_json = db.Column(db.Text, nullable=False)  # Stores DataFrame as JSON
     risk_analysis_json = db.Column(db.Text)  # Risk analysis details
     optimizations_json = db.Column(db.Text)  # Optimization recommendations
+    ai_insights_json = db.Column(db.Text)  # Claude AI narrative insights
     
     # Metadata
     analysis_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
