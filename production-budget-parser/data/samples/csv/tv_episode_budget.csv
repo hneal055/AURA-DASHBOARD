@@ -1,0 +1,65 @@
+Category,Department,Description,Amount
+Showrunner,Above the Line,Showrunner / Executive Producer,55000
+Writing,Above the Line,Episode Writer Fee,22000
+Writing,Above the Line,Writers Room (2 writers),18000
+Director,Above the Line,Episode Director,28000
+Cast,Above the Line,Series Regular 1,32000
+Cast,Above the Line,Series Regular 2,28000
+Cast,Above the Line,Series Regular 3,22000
+Cast,Above the Line,Guest Star 1,9000
+Cast,Above the Line,Guest Star 2,7500
+Cast,Above the Line,Co-Star / Day Players,5000
+Production Management,Production,Unit Production Manager,16000
+Production Management,Production,1st Assistant Director,12000
+Production Management,Production,2nd Assistant Director,8500
+Production Management,Production,Production Coordinator,9000
+Production Management,Production,Script Supervisor,8000
+Camera,Production,Director of Photography,22000
+Camera,Production,Camera Operator A,10500
+Camera,Production,Camera Operator B,10500
+Camera,Production,1st AC x2,14000
+Camera,Production,2nd AC x2,10000
+Camera,Production,Camera Package - 2 Units,18000
+Lighting,Production,Gaffer,11000
+Lighting,Production,Best Boy Electric,8000
+Lighting,Production,Electricians x4,14000
+Lighting,Production,Lighting Package,16000
+Grip,Production,Key Grip,10000
+Grip,Production,Best Boy Grip,7500
+Grip,Production,Grips x3,12000
+Grip,Production,Grip Package,9000
+Sound,Production,Production Sound Mixer,11000
+Sound,Production,Boom Operator,7000
+Sound,Production,Sound Package,5500
+Art Department,Production,Production Designer,14000
+Art Department,Production,Art Director,10000
+Art Department,Production,Set Decorator,8500
+Art Department,Production,Props,9000
+Art Department,Production,Set Construction,20000
+Wardrobe,Production,Costume Designer,10000
+Wardrobe,Production,Costumers x2,9000
+Wardrobe,Production,Costume Rental,6000
+Hair & Makeup,Production,Dept Head Makeup,8500
+Hair & Makeup,Production,Dept Head Hair,8000
+Hair & Makeup,Production,Additional Artists x2,10000
+Locations,Production,Location Manager,10000
+Locations,Production,Location Fees,22000
+Locations,Production,Permits,4000
+Transportation,Production,Transportation Coordinator,9000
+Transportation,Production,Drivers x4,16000
+Transportation,Production,Vehicles and Fuel,8000
+Catering,Production,Catering - Full Service,12000
+Catering,Production,Craft Services,5000
+VFX,Post Production,VFX Supervisor (on-set),8000
+VFX,Post Production,VFX Production - 50 shots,35000
+Editing,Post Production,Editor,18000
+Editing,Post Production,Assistant Editor,9000
+Sound Post,Post Production,Supervising Sound Editor,12000
+Sound Post,Post Production,Re-Recording Mix,9000
+Sound Post,Post Production,ADR / Foley,6000
+Music,Post Production,Score / Music,14000
+Color,Post Production,Digital Intermediate,10000
+Deliverables,Post Production,Network Deliverables,5000
+Insurance,General,Production Insurance,14000
+Legal,General,Clearances and Legal,6000
+Contingency,General,10% Contingency,60000

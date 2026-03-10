@@ -1,0 +1,81 @@
+Category,Department,Description,Amount
+Story & Screenplay,Development,Script Rights,15000
+Story & Screenplay,Development,Screenplay Revisions,8000
+Story & Screenplay,Development,Script Consultation,3500
+Producer,Above the Line,Executive Producer Fee,25000
+Producer,Above the Line,Line Producer Fee,18000
+Director,Above the Line,Director Fee,40000
+Director,Above the Line,Director Prep,5000
+Cast,Above the Line,Lead Actor - Principal,35000
+Cast,Above the Line,Supporting Actor 1,12000
+Cast,Above the Line,Supporting Actor 2,8000
+Cast,Above the Line,Supporting Actor 3,6000
+Cast,Above the Line,Day Players,4500
+Casting,Above the Line,Casting Director,7500
+Casting,Above the Line,Casting Sessions,1200
+Production Staff,Production,Production Manager,14000
+Production Staff,Production,Production Coordinator,9000
+Production Staff,Production,Production Assistant x3,6000
+Art Department,Production,Production Designer,12000
+Art Department,Production,Art Director,9000
+Art Department,Production,Set Decorator,7000
+Art Department,Production,Props Master,6500
+Art Department,Production,Props Purchase/Rental,8000
+Art Department,Production,Set Construction,15000
+Art Department,Production,Set Dressing,5000
+Camera,Production,Director of Photography,18000
+Camera,Production,Camera Operator,9000
+Camera,Production,1st AC,7500
+Camera,Production,2nd AC,5500
+Camera,Production,Camera Package Rental,12000
+Camera,Production,Steadicam Operator,3500
+Lighting,Production,Gaffer,9000
+Lighting,Production,Best Boy Electric,6500
+Lighting,Production,Lighting Package Rental,14000
+Lighting,Production,Generator Rental,3000
+Grip,Production,Key Grip,8500
+Grip,Production,Best Boy Grip,6000
+Grip,Production,Grip Package Rental,8000
+Sound,Production,Production Sound Mixer,9500
+Sound,Production,Boom Operator,6000
+Sound,Production,Sound Package Rental,4500
+Locations,Production,Location Manager,8000
+Locations,Production,Location Fees,18000
+Locations,Production,Location Scout,3000
+Locations,Production,Permits and Insurance - Locations,5000
+Transportation,Production,Transportation Coordinator,7000
+Transportation,Production,Picture Cars,4000
+Transportation,Production,Fuel and Mileage,3500
+Transportation,Production,Equipment Trucks,6000
+Wardrobe,Production,Costume Designer,9000
+Wardrobe,Production,Costume Rental/Purchase,7000
+Wardrobe,Production,Wardrobe Assistant,4500
+Hair & Makeup,Production,Key Makeup Artist,7500
+Hair & Makeup,Production,Hair Stylist,6500
+Hair & Makeup,Production,Makeup/Hair Supplies,2000
+Catering,Production,Craft Services,8000
+Catering,Production,Catering - Meal Allowances,6000
+Medical,Production,On-Set Medic,3500
+Medical,Production,COVID Safety Officer,2500
+VFX,Post Production,VFX Supervisor,12000
+VFX,Post Production,VFX Artists x2,18000
+VFX,Post Production,VFX Software Licenses,4000
+Editing,Post Production,Editor,15000
+Editing,Post Production,Assistant Editor,8000
+Editing,Post Production,Editing Suite Rental,5000
+Color,Post Production,Colorist,8000
+Color,Post Production,Color Grade,5000
+Sound Post,Post Production,Sound Designer,9000
+Sound Post,Post Production,Re-Recording Mixer,7000
+Sound Post,Post Production,ADR Recording,4000
+Sound Post,Post Production,Foley,3500
+Music,Post Production,Composer,12000
+Music,Post Production,Score Recording,8000
+Music,Post Production,Music Licensing,5000
+Deliverables,Post Production,DCP Creation,3000
+Deliverables,Post Production,Screeners and Copies,1500
+Insurance,General,Production Insurance,12000
+Insurance,General,E&O Insurance,6000
+Legal,General,Entertainment Attorney,8000
+Legal,General,Contracts and Clearances,4000
+Contingency,General,10% Contingency,35000

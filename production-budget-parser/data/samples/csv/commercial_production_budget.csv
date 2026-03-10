@@ -1,0 +1,46 @@
+Category,Department,Description,Amount
+Creative,Pre-Production,Creative Director,8000
+Creative,Pre-Production,Concept Development,3000
+Creative,Pre-Production,Storyboarding,2500
+Creative,Pre-Production,Pre-Viz,4000
+Director,Pre-Production,Director Fee,15000
+Director,Pre-Production,Director Prep Days,3000
+Producer,Pre-Production,Executive Producer,10000
+Producer,Pre-Production,Line Producer,7000
+Talent,Production,Hero Talent (Principal),12000
+Talent,Production,Supporting Talent x3,6000
+Talent,Production,Background x10,4000
+Talent,Production,Talent Agency Fees,2500
+Crew,Production,Director of Photography,8000
+Crew,Production,Camera Operator,4500
+Crew,Production,1st AC,3500
+Crew,Production,Gaffer,4000
+Crew,Production,Key Grip,3500
+Crew,Production,Sound Mixer,3500
+Crew,Production,Art Director,5000
+Crew,Production,Prop Stylist,3500
+Crew,Production,Wardrobe Stylist,3500
+Crew,Production,Hair & Makeup,4000
+Equipment,Production,Camera Package (RED/ALEXA),6000
+Equipment,Production,Lighting Package,5000
+Equipment,Production,Grip Package,3500
+Equipment,Production,Drone / Aerial Unit,4500
+Equipment,Production,Generator,1500
+Location,Production,Location Fee,8000
+Location,Production,Location Scout,1500
+Location,Production,Permits,2000
+Catering,Production,Full Crew Catering x3 Days,4500
+Catering,Production,Craft Services,1500
+VFX,Post Production,VFX Supervisor,4000
+VFX,Post Production,Compositing,8000
+VFX,Post Production,Motion Graphics,5000
+Edit,Post Production,Editor,6000
+Edit,Post Production,Offline Edit,3000
+Color,Post Production,Color Grade,4000
+Sound,Post Production,Sound Design & Mix,3500
+Finishing,Post Production,Online / Conform,3000
+Finishing,Post Production,Deliverables - All Formats,2000
+Music,Post Production,Music License,5000
+Insurance,General,Production Insurance,3500
+Legal,General,Talent Contracts,2000
+Contingency,General,10% Contingency,18500
