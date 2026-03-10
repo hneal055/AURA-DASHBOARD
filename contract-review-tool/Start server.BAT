@@ -42,7 +42,7 @@ if exist "venv\Scripts\python.exe" (
 )
 
 echo [96mChecking dependencies...[0m
-%PIP% list | findstr /C:"Flask" /C:"anthropic" /C:"pypdf" /C:"python-docx" >nul 2>&1
+%PIP% show flask-sqlalchemy >nul 2>&1
 if errorlevel 1 (
     echo [91mMissing dependencies! Installing...[0m
     %PIP% install -r requirements.txt
@@ -54,6 +54,9 @@ echo.
 echo Server will be available at:
 echo   * Local:   http://localhost:5001
 echo   * Network: http://%COMPUTERNAME%:5001
+echo.
+echo Login required — default password set in .env ^(APP_PASSWORD^)
+echo Analysis history available at: http://localhost:5001/history
 echo.
 echo Press CTRL+C to stop the server
 echo ================================================================
