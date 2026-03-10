@@ -8,6 +8,7 @@ Enhanced with PATH A Features: Interactive Charts, Modern UI, Excel Export
 
 from flask import Flask, request, render_template_string, redirect, url_for, send_file, flash, jsonify, get_flashed_messages
 import pandas as pd
+import io
 import os
 import json
 import uuid
@@ -392,7 +393,7 @@ def view_analysis(file_id):
     
     try:
         # Reconstruct DataFrame from JSON
-        df = pd.read_json(analysis.dataframe_json)
+        df = pd.read_json(io.StringIO(analysis.dataframe_json))
         risk_analysis = json.loads(analysis.risk_analysis_json)
         optimizations = json.loads(analysis.optimizations_json)
         
@@ -1139,7 +1140,7 @@ def export_excel_route(file_id):
         return redirect(url_for('index'))
     
     try:
-        df = pd.read_json(analysis.dataframe_json)
+        df = pd.read_json(io.StringIO(analysis.dataframe_json))
         
         # Prepare budget data with safe defaults
         budget_data = {
@@ -1189,7 +1190,7 @@ def generate_pdf_report(file_id):
     try:
         from pdf_report_generator import generate_pdf_report as gen_pdf
         
-        df = pd.read_json(analysis.dataframe_json)
+        df = pd.read_json(io.StringIO(analysis.dataframe_json))
         
         # Prepare budget data with safe defaults
         filename = analysis.filename
@@ -1323,8 +1324,8 @@ def compare_budgets_route(file_id):
     
     try:
         # Reconstruct DataFrames
-        df1 = pd.read_json(analysis1.dataframe_json)
-        df2 = pd.read_json(analysis2.dataframe_json)
+        df1 = pd.read_json(io.StringIO(analysis1.dataframe_json))
+        df2 = pd.read_json(io.StringIO(analysis2.dataframe_json))
         
         # Perform comparison
         comparison_result = compare_budgets(df1, df2, analysis1.filename, analysis2.filename)
