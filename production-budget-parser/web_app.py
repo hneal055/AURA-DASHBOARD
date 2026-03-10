@@ -31,6 +31,7 @@ load_dotenv(override=True)
 from flask_auth import require_api_key
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_wtf.csrf import CSRFProtect, generate_csrf
 
 # Import database
 from database_models import db, BudgetAnalysis, BudgetLineItem, BudgetComparison, get_recent_analyses
@@ -56,6 +57,9 @@ app.secret_key = _secret_key
 # Session cookie security
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+
+# CSRF protection
+csrf = CSRFProtect(app)
 
 # Rate limiting
 limiter = Limiter(
@@ -218,13 +222,14 @@ def generate_recent_analyses():
 def index():
     """Homepage with upload form and recent analyses"""
     recent_analyses_html = generate_recent_analyses()
+    csrf_token = generate_csrf()
 
     # Build flash messages HTML
     messages = get_flashed_messages(with_categories=True)
     flash_html = ''
     for category, message in messages:
         color = '#c0392b' if category == 'error' else '#27ae60'
-        flash_html += f'<div style="background:{color};color:white;padding:12px 20px;border-radius:8px;margin-bottom:12px;font-weight:600;">{message}</div>'
+        flash_html += f'<div style="background:{color};color:white;padding:12px 20px;border-radius:8px;margin-bottom:12px;font-weight:600;">{html_lib.escape(message)}</div>'
 
     html = f"""
     <!DOCTYPE html>
@@ -251,6 +256,7 @@ def index():
             <!-- Upload Form -->
             <div class="upload-section fade-in">
                 <form action="/upload" method="post" enctype="multipart/form-data" class="upload-form">
+                    <input type="hidden" name="csrf_token" value="{csrf_token}">
                     <div class="form-group">
                         <label for="file">Choose CSV File:</label>
                         <input type="file" name="file" id="file" accept=".csv" required>
@@ -337,10 +343,19 @@ def upload_file():
             # Validate required columns
             required_cols = ['Category', 'Amount']
             missing_cols = [col for col in required_cols if col not in df.columns]
-            
             if missing_cols:
                 flash(f'Missing required columns: {", ".join(missing_cols)}', 'error')
                 return redirect(url_for('index'))
+
+            # Validate Amount column is numeric
+            df['Amount'] = pd.to_numeric(df['Amount'], errors='coerce')
+            invalid_rows = df['Amount'].isna().sum()
+            if invalid_rows == len(df):
+                flash('Amount column contains no valid numbers. Please check your CSV file.', 'error')
+                return redirect(url_for('index'))
+            if invalid_rows > 0:
+                logger.warning('CSV %s has %d non-numeric Amount values — they will be treated as 0.', filename, invalid_rows)
+                df['Amount'] = df['Amount'].fillna(0)
             
             # Perform risk analysis
             risk_manager = RiskManager()
@@ -1279,6 +1294,8 @@ def compare_page(file_id):
         flash('Analysis not found', 'error')
         return redirect(url_for('index'))
     
+    csrf_token = generate_csrf()
+
     # Get all analyses for comparison selection FROM DATABASE
     all_analyses = BudgetAnalysis.query.order_by(BudgetAnalysis.upload_date.desc()).all()
     
@@ -1304,6 +1321,7 @@ def compare_page(file_id):
             <div class="section-card fade-in">
                 <h2>Select Budget to Compare With:</h2>
                 <form action="/compare/{file_id}" method="post" class="comparison-form">
+                    <input type="hidden" name="csrf_token" value="{csrf_token}">
                     <div class="form-group">
                         <label for="compare_id">Choose Budget:</label>
                         <select name="compare_id" id="compare_id" required>
@@ -1490,8 +1508,21 @@ def compare_budgets_route(file_id):
         return redirect(url_for('compare_page', file_id=file_id))
 
 
+@app.route('/api/health', methods=['GET'])
+@csrf.exempt
+def health_check():
+    """Health check endpoint — no auth required."""
+    try:
+        count = BudgetAnalysis.query.count()
+        return jsonify({'status': 'ok', 'analyses': count}), 200
+    except Exception as e:
+        logger.error('Health check failed: %s', e)
+        return jsonify({'status': 'error'}), 500
+
+
 @app.route('/api/ai-insights/<file_id>', methods=['POST'])
 @require_api_key
+@csrf.exempt
 def ai_insights(file_id):
     """
     Generate AI-powered narrative insights for a budget analysis.

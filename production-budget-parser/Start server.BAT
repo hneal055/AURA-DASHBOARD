@@ -47,18 +47,27 @@ if errorlevel 1 (
 )
 
 echo.
-echo [92mStarting Flask server...[0m
-echo.
 echo Server will be available at:
 echo   * Local:   http://localhost:8082
-echo   * Network: http://%COMPUTERNAME%:8082
 echo.
 echo AI Insights API ^(requires X-API-Key header^):
 echo   POST http://localhost:8082/api/ai-insights/^<file_id^>
 echo   Header: X-API-Key: ^<BUDGET_API_KEY from .env^>
 echo.
+echo Health check: http://localhost:8082/api/health
+echo.
 echo Press CTRL+C to stop the server
 echo ================================================================
 echo.
 
-%PYTHON% web_app.py
+REM Use gunicorn if available (production WSGI server), else Flask dev server
+%PYTHON% -c "import gunicorn" >nul 2>&1
+if not errorlevel 1 (
+    echo [92mStarting with gunicorn ^(production WSGI server^)...[0m
+    echo.
+    venv\Scripts\gunicorn.exe -w 2 -b 127.0.0.1:8082 --timeout 120 web_app:app
+) else (
+    echo [93mStarting with Flask dev server ^(install gunicorn for production^)...[0m
+    echo.
+    %PYTHON% web_app.py
+)
