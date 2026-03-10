@@ -1367,26 +1367,26 @@ def compare_budgets_route(file_id):
                 <!-- Summary Stats -->
                 <div class="stats-grid fade-in">
                     <div class="stat-card">
-                        <div class="stat-icon">📊</div>
-                        <div class="stat-value">{analysis1.filename}</div>
-                        <div class="stat-label">${analysis1.total_budget:,.2f}</div>
+                        <div class="stat-icon">📁</div>
+                        <div class="stat-value" style="font-size:1.3rem;word-break:break-word;line-height:1.3;" title="{analysis1.filename}">{analysis1.filename[:28] + '…' if len(analysis1.filename) > 28 else analysis1.filename}</div>
+                        <div class="stat-label">Budget A &nbsp;·&nbsp; ${analysis1.total_budget:,.2f}</div>
                     </div>
-                    
+
                     <div class="stat-card">
-                        <div class="stat-icon">📊</div>
-                        <div class="stat-value">{analysis2.filename}</div>
-                        <div class="stat-label">${analysis2.total_budget:,.2f}</div>
+                        <div class="stat-icon">📁</div>
+                        <div class="stat-value" style="font-size:1.3rem;word-break:break-word;line-height:1.3;" title="{analysis2.filename}">{analysis2.filename[:28] + '…' if len(analysis2.filename) > 28 else analysis2.filename}</div>
+                        <div class="stat-label">Budget B &nbsp;·&nbsp; ${analysis2.total_budget:,.2f}</div>
                     </div>
-                    
+
                     <div class="stat-card">
                         <div class="stat-icon">{'📈' if analysis2.total_budget > analysis1.total_budget else '📉'}</div>
                         <div class="stat-value">${abs(analysis2.total_budget - analysis1.total_budget):,.2f}</div>
                         <div class="stat-label">Difference</div>
                     </div>
-                    
+
                     <div class="stat-card">
-                        <div class="stat-icon">%</div>
-                        <div class="stat-value">{((analysis2.total_budget - analysis1.total_budget) / analysis1.total_budget * 100):+.1f}%</div>
+                        <div class="stat-icon">{'🔺' if analysis2.total_budget > analysis1.total_budget else '🔻'}</div>
+                        <div class="stat-value" style="color:{'#e74c3c' if analysis2.total_budget > analysis1.total_budget else '#27ae60'};">{((analysis2.total_budget - analysis1.total_budget) / analysis1.total_budget * 100):+.1f}%</div>
                         <div class="stat-label">Change</div>
                     </div>
                 </div>
