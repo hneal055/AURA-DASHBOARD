@@ -56,8 +56,9 @@ def generate_side_by_side_chart(comparison_data: Dict[str, Any]) -> Dict[str, An
                 'title': {
                     'display': True,
                     'text': 'Department Comparison: Side-by-Side',
+                    'color': '#2c3e50',
                     'font': {
-                        'size': 18,
+                        'size': 15,
                         'weight': 'bold'
                     }
                 },
@@ -128,8 +129,9 @@ def generate_change_chart(comparison_data: Dict[str, Any]) -> Dict[str, Any]:
                 'title': {
                     'display': True,
                     'text': 'Budget Change by Department (%)',
+                    'color': '#2c3e50',
                     'font': {
-                        'size': 18,
+                        'size': 15,
                         'weight': 'bold'
                     }
                 },
@@ -215,8 +217,9 @@ def generate_waterfall_chart(comparison_data: Dict[str, Any]) -> Dict[str, Any]:
                 'title': {
                     'display': True,
                     'text': 'Budget Flow: Waterfall Analysis',
+                    'color': '#2c3e50',
                     'font': {
-                        'size': 18,
+                        'size': 15,
                         'weight': 'bold'
                     }
                 },
@@ -288,8 +291,9 @@ def generate_category_comparison_chart(comparison_data: Dict[str, Any]) -> Dict[
                 'title': {
                     'display': True,
                     'text': 'Top 10 Categories: Comparison',
+                    'color': '#2c3e50',
                     'font': {
-                        'size': 18,
+                        'size': 15,
                         'weight': 'bold'
                     }
                 },

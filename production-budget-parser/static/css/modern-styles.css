@@ -28,7 +28,7 @@
 
 body {
     font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #0f172a;
     background-attachment: fixed;
     color: var(--dark-color);
     line-height: 1.6;
@@ -216,17 +216,31 @@ body {
     padding: 25px;
     box-shadow: var(--shadow);
     text-align: center;
-    transition: var(--transition);
+    transition: all 0.25s ease;
+    border-top: 4px solid transparent;
+    cursor: default;
 }
 
 .stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-hover);
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+    border-top-color: var(--primary-color);
+    background: linear-gradient(160deg, #f0f7ff 0%, #ffffff 100%);
+}
+
+.stat-card:hover .stat-value {
+    color: var(--primary-color);
+}
+
+.stat-card:hover .stat-icon {
+    transform: scale(1.2);
 }
 
 .stat-icon {
     font-size: 2.5rem;
     margin-bottom: 10px;
+    display: inline-block;
+    transition: transform 0.25s ease;
 }
 
 .stat-value {
@@ -234,6 +248,7 @@ body {
     font-weight: 700;
     color: var(--dark-color);
     margin-bottom: 5px;
+    transition: color 0.25s ease;
 }
 
 .stat-label {
@@ -243,18 +258,129 @@ body {
     letter-spacing: 1px;
 }
 
+/* ========== SECTION CARDS (analysis page blocks) ========== */
+.section-card {
+    background: white;
+    border-radius: 12px;
+    padding: 28px 32px;
+    box-shadow: var(--shadow);
+    margin-bottom: 28px;
+}
+
+.section-card h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+/* ========== ACTIONS BAR ========== */
+.actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 20px 0 32px;
+}
+
+/* ========== RECENT ANALYSES TABLE ========== */
+.recent-analyses {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    margin-top: 28px;
+}
+
+.recent-analyses h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 16px;
+}
+
+.recent-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.recent-table thead {
+    background: #f4f6f9;
+}
+
+.recent-table thead th {
+    color: var(--dark-color);
+    padding: 10px 14px;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+}
+
+.recent-table tbody td {
+    padding: 11px 14px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #444;
+}
+
+.recent-table tbody tr:hover {
+    background: #f8faff;
+}
+
+/* ========== FEATURES GRID ========== */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.feature-card {
+    background: white;
+    border-radius: 12px;
+    padding: 22px 18px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.feature-card h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 6px;
+}
+
+.feature-card p {
+    font-size: 0.82rem;
+    color: #7f8c8d;
+}
+
 /* ========== CHARTS SECTION ========== */
 .charts-section {
     margin: 30px 0;
 }
 
 .section-title {
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: 700;
-    color: white;
+    color: #e2e8f0;
     margin-bottom: 25px;
     text-align: center;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    letter-spacing: 0.3px;
 }
 
 .charts-grid {
@@ -270,6 +396,14 @@ body {
     padding: 25px;
     box-shadow: var(--shadow);
     transition: var(--transition);
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-container canvas {
+    flex: 1;
+    min-height: 280px;
 }
 
 .chart-container:hover {
@@ -305,6 +439,43 @@ body {
 
 canvas {
     max-height: 400px !important;
+}
+
+/* Comparison chart card */
+.chart-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-card canvas {
+    flex: 1;
+    min-height: 280px;
+}
+
+/* Comparison section wrapper (from comparison_charts.py) */
+.section {
+    margin-bottom: 20px;
+}
+
+.section h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+/* Comparison charts grid */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+    gap: 20px;
 }
 
 /* ========== TABLES ========== */

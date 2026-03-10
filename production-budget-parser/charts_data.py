@@ -167,11 +167,18 @@ def generate_chart_html(chart_data):
     <script>
         // Chart data embedded from Python
         const chartData = {json.dumps(chart_data, indent=2)};
-        
-        // Initialize all charts when page loads
-        document.addEventListener('DOMContentLoaded', function() {{
+
+        // Run after all deferred scripts (charts.js) have loaded
+        window.addEventListener('load', function() {{
             if (typeof initializeCharts === 'function') {{
                 initializeCharts(chartData);
+            }} else {{
+                // Fallback: retry once after short delay
+                setTimeout(function() {{
+                    if (typeof initializeCharts === 'function') {{
+                        initializeCharts(chartData);
+                    }}
+                }}, 200);
             }}
         }});
     </script>
