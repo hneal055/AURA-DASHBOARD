@@ -55,14 +55,10 @@ def require_api_key(f):
         # Try to get API key from multiple sources
         api_key = None
         
-        # 1. Check header
+        # 1. Check header (preferred)
         api_key = request.headers.get('X-API-Key')
-        
-        # 2. Check query parameter
-        if not api_key:
-            api_key = request.args.get('api_key')
-        
-        # 3. Check JSON body
+
+        # 2. Check JSON body
         if not api_key and request.is_json:
             api_key = request.json.get('api_key')
         

@@ -12,6 +12,7 @@ import io
 import os
 import json
 import uuid
+import html as html_lib
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
@@ -42,6 +43,10 @@ _secret_key = os.environ.get('SECRET_KEY')
 if not _secret_key:
     raise RuntimeError('SECRET_KEY is not set. Add it to your .env file.')
 app.secret_key = _secret_key
+
+# Session cookie security
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 
 # Database Configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///budget_analysis.db'
@@ -434,10 +439,10 @@ def view_analysis(file_id):
                 if c == 'Amount':
                     cells += f'<td style="text-align:right;font-weight:600;">${float(val):,.2f}</td>'
                 else:
-                    cells += f'<td>{val}</td>'
+                    cells += f'<td>{html_lib.escape(str(val))}</td>'
             line_item_rows += f'<tr>{cells}</tr>'
 
-        header_cells = ''.join(f'<th>{c}</th>' for c in cols)
+        header_cells = ''.join(f'<th>{html_lib.escape(c)}</th>' for c in cols)
 
         # Build budget (category) breakdown modal rows
         budget_rows = ''
@@ -452,7 +457,7 @@ def view_analysis(file_id):
                 bar_w = min(100, pct)
                 budget_rows += f"""
                 <tr>
-                    <td><strong>{row['Category']}</strong></td>
+                    <td><strong>{html_lib.escape(str(row['Category']))}</strong></td>
                     <td style="text-align:right;font-weight:600;">${row['Total']:,.2f}</td>
                     <td style="text-align:right;">{int(row['Items'])}</td>
                     <td style="min-width:160px;">
@@ -485,8 +490,8 @@ def view_analysis(file_id):
             risk_cat_rows += f"""
             <tr>
                 <td>
-                    <strong>{label}</strong>
-                    <div style="font-size:0.78rem;color:#888;margin-top:2px;">{desc}</div>
+                    <strong>{html_lib.escape(label)}</strong>
+                    <div style="font-size:0.78rem;color:#888;margin-top:2px;">{html_lib.escape(desc)}</div>
                 </td>
                 <td style="text-align:right;">{cat_data['count']}</td>
                 <td style="text-align:right;font-weight:600;">${cat_data['amount']:,.2f}</td>
@@ -504,8 +509,8 @@ def view_analysis(file_id):
             item_pct = item.get('percentage', 0)
             risk_item_rows += f"""
             <tr>
-                <td>{item.get('description', 'Unknown')}</td>
-                <td>{item.get('department', '—')}</td>
+                <td>{html_lib.escape(str(item.get('description', 'Unknown')))}</td>
+                <td>{html_lib.escape(str(item.get('department', '—')))}</td>
                 <td style="text-align:right;font-weight:600;">${item.get('amount', 0):,.2f}</td>
                 <td style="text-align:right;">{item_pct:.1f}%</td>
             </tr>"""
@@ -517,7 +522,7 @@ def view_analysis(file_id):
             bar_w = min(100, d['percentage'])
             dept_rows += f"""
             <tr>
-                <td><strong>{d['name']}</strong></td>
+                <td><strong>{html_lib.escape(str(d['name']))}</strong></td>
                 <td style="text-align:right;font-weight:600;">${d['total']:,.2f}</td>
                 <td style="text-align:right;">{d['items']}</td>
                 <td style="min-width:140px;">
@@ -1555,6 +1560,4 @@ if __name__ == '__main__':
     print("=" * 80)
     print()
     
-    # Use port 8080 to avoid common Windows socket permission errors
-    # Port 5000 is often blocked by Windows services or Hyper-V
-    app.run(debug=True, host='0.0.0.0', port=8082)
+    app.run(debug=False, host='127.0.0.1', port=8082)
