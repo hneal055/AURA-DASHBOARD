@@ -9,16 +9,22 @@ import hashlib
 import json
 import os
 
+_api_key_cache = None
+
 def load_api_keys(filename='api_keys.json'):
-    """Load API keys from file"""
+    """Load API keys from file, cached in memory after first read."""
+    global _api_key_cache
+    if _api_key_cache is not None:
+        return _api_key_cache
     if not os.path.exists(filename):
-        return []
-    
+        _api_key_cache = []
+        return _api_key_cache
     try:
         with open(filename, 'r') as f:
-            return json.load(f)
-    except:
-        return []
+            _api_key_cache = json.load(f)
+    except Exception:
+        _api_key_cache = []
+    return _api_key_cache
 
 def hash_api_key(api_key):
     """Hash an API key"""
@@ -66,7 +72,7 @@ def require_api_key(f):
         if not api_key:
             return jsonify({
                 'error': 'API key required',
-                'message': 'Please provide API key in X-API-Key header, api_key query parameter, or JSON body'
+                'message': 'Please provide API key in X-API-Key header or JSON body'
             }), 401
         
         if not verify_api_key(api_key):

@@ -9,3 +9,4 @@ SQLAlchemy==2.0.48
 python-dotenv==1.2.2
 anthropic==0.84.0
 gunicorn==25.1.0
+flask-limiter==4.1.1

@@ -13,6 +13,13 @@ import os
 import json
 import uuid
 import html as html_lib
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+)
+logger = logging.getLogger(__name__)
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
@@ -22,6 +29,8 @@ load_dotenv(override=True)
 
 # API key auth for protected endpoints
 from flask_auth import require_api_key
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 # Import database
 from database_models import db, BudgetAnalysis, BudgetLineItem, BudgetComparison, get_recent_analyses
@@ -47,6 +56,14 @@ app.secret_key = _secret_key
 # Session cookie security
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+
+# Rate limiting
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=['200 per day', '60 per hour'],
+    storage_uri='memory://'
+)
 
 # Database Configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///budget_analysis.db'
@@ -289,6 +306,7 @@ def index():
 
 
 @app.route('/upload', methods=['POST'])
+@limiter.limit('20 per hour')
 def upload_file():
     """Handle file upload and analysis - SAVE TO DATABASE"""
     if 'file' not in request.files:
@@ -378,7 +396,8 @@ def upload_file():
             
         except Exception as e:
             db.session.rollback()
-            flash(f'Error analyzing file: {str(e)}', 'error')
+            logger.error('Error analyzing file: %s', e, exc_info=True)
+            flash('An error occurred while analyzing the file. Please check the file format and try again.', 'error')
             return redirect(url_for('index'))
     
     else:
@@ -1131,7 +1150,8 @@ def view_analysis(file_id):
         return html
         
     except Exception as e:
-        flash(f'Error displaying analysis: {str(e)}', 'error')
+        logger.error('Error displaying analysis %s: %s', file_id, e, exc_info=True)
+        flash('Unable to display analysis. Please try again or re-upload the file.', 'error')
         return redirect(url_for('index'))
 
 
@@ -1179,7 +1199,8 @@ def export_excel_route(file_id):
         )
         
     except Exception as e:
-        flash(f'Error exporting to Excel: {str(e)}', 'error')
+        logger.error('Error exporting Excel for %s: %s', file_id, e, exc_info=True)
+        flash('Unable to generate Excel export. Please try again.', 'error')
         return redirect(url_for('view_analysis', file_id=file_id))
 
 
@@ -1244,7 +1265,8 @@ def generate_pdf_report(file_id):
         )
         
     except Exception as e:
-        flash(f'Error generating PDF: {str(e)}', 'error')
+        logger.error('Error generating PDF for %s: %s', file_id, e, exc_info=True)
+        flash('Unable to generate PDF report. Please try again.', 'error')
         return redirect(url_for('view_analysis', file_id=file_id))
 
 
@@ -1463,7 +1485,8 @@ def compare_budgets_route(file_id):
         
     except Exception as e:
         db.session.rollback()
-        flash(f'Error comparing budgets: {str(e)}', 'error')
+        logger.error('Error comparing budgets %s vs %s: %s', file_id, compare_id, e, exc_info=True)
+        flash('Unable to complete budget comparison. Please try again.', 'error')
         return redirect(url_for('compare_page', file_id=file_id))
 
 
@@ -1540,7 +1563,8 @@ Return ONLY a valid JSON object with this structure:
         return jsonify({'success': True, 'insights': insights, 'cached': False})
 
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        logger.error('Error generating AI insights for %s: %s', file_id, e, exc_info=True)
+        return jsonify({'error': 'Unable to generate insights. Please try again.'}), 500
 
 
 if __name__ == '__main__':
